@@ -6,6 +6,7 @@ import java.util.Date;
 import lombok.Getter;
 import me.nullicorn.hypixel4j.response.ComplexAPIResponse;
 import me.nullicorn.hypixel4j.util.FormatCode;
+import me.nullicorn.hypixel4j.util.GameType;
 
 /**
  * Created by Ben on 6/8/20 @ 7:25 PM
@@ -65,6 +66,17 @@ public class HypixelPlayer extends ComplexAPIResponse {
             return new Date(getInt("lastLogout"));
         }
         return null;
+    }
+
+    /**
+     * @return The type of the player's most recently-played game, or {@link GameType#UNKNOWN} if it is unknown
+     */
+    public GameType getMostRecentGameType() {
+        if (hasProperty("mostRecentGameType")) {
+            return GameType.fromTypeName(getStr("mostRecentGameType"));
+        } else {
+            return GameType.UNKNOWN;
+        }
     }
 
     /**
