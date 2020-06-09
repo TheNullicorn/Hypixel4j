@@ -48,15 +48,19 @@ public class HypixelAPI {
     }
 
     public CompletableFuture<HypixelPlayer> getPlayer(UUID uuid) {
-        CompletableFuture<HypixelPlayer> future = new CompletableFuture<>();
+        return fetch(HypixelPlayer.class, "player", Collections.singletonMap("uuid", formatUuid(uuid)));
+    }
+
+    public HypixelPlayer getPlayerSync(UUID uuid) throws ApiException {
+        return fetchSync(HypixelPlayer.class, "player", Collections.singletonMap("uuid", formatUuid(uuid)));
+    }
+
+    protected <T extends APIResponse> CompletableFuture<T> fetch(Class<T> type, String endpoint, Map<String, Object> params) {
+        CompletableFuture<T> future = new CompletableFuture<>();
 
         executor.submit(() -> {
             try {
-                HypixelPlayer response = fetch(
-                    HypixelPlayer.class,
-                    "player",
-                    Collections.singletonMap("uuid", formatUuid(uuid))
-                );
+                T response = fetchSync(type, endpoint, params);
                 future.complete(response);
 
             } catch (Exception e) {
@@ -67,28 +71,33 @@ public class HypixelAPI {
         return future;
     }
 
-    protected <T extends APIResponse> T fetch(final Class<T> type, String endpoint, Map<String, Object> params) throws IOException, URISyntaxException, ApiException {
-        // Build request url
-        URIBuilder ub = new URIBuilder()
-            .setScheme("https")
-            .setHost("api.hypixel.net")
-            .setPath(endpoint)
-            .setParameter("key", apiKey.toString());
-        params.forEach((key, value) -> ub.setParameter(key, value.toString()));
+    protected <T extends APIResponse> T fetchSync(final Class<T> type, String endpoint, Map<String, Object> params) throws ApiException {
+        try {
+            // Build request url
+            URIBuilder ub = new URIBuilder()
+                .setScheme("https")
+                .setHost("api.hypixel.net")
+                .setPath(endpoint)
+                .setParameter("key", apiKey.toString());
+            params.forEach((key, value) -> ub.setParameter(key, value.toString()));
 
-        HttpGet request = new HttpGet(ub.build());
-        request.setHeaders(requestHeaders);
+            HttpGet request = new HttpGet(ub.build());
+            request.setHeaders(requestHeaders);
 
-        HttpResponse response = httpClient.execute(request);
-        T apiResponse = gson.fromJson(EntityUtils.toString(response.getEntity()), type);
+            HttpResponse response = httpClient.execute(request);
+            T apiResponse = gson.fromJson(EntityUtils.toString(response.getEntity()), type);
 
-        if (!apiResponse.isSuccessful()) {
-            throw new ApiException(apiResponse.getError());
-        } else if (apiResponse.isThrottled()) {
-            throw new KeyThrottleException();
+            if (!apiResponse.isSuccessful()) {
+                throw new ApiException(apiResponse.getError());
+            } else if (apiResponse.isThrottled()) {
+                throw new KeyThrottleException();
+            }
+
+            return apiResponse;
+
+        } catch (IOException | URISyntaxException e) {
+            throw new ApiException("Failed to make API request", e);
         }
-
-        return apiResponse;
     }
 
     private String formatUuid(UUID uuid) {
