@@ -25,6 +25,20 @@ public interface WrappedJsonObject {
     // Integer properties
 
     /**
+     * @return The long integer value of the property, or 0 if it does not exist
+     * @see #getProperty(String)
+     */
+    long getLong(String name);
+
+    /**
+     * @param def Default value
+     * @see #getProperty(String)
+     */
+    long getLong(String name, long def);
+
+    // Long integer properties
+
+    /**
      * @return The integer value of the property, or 0 if it does not exist
      * @see #getProperty(String)
      */
@@ -34,7 +48,7 @@ public interface WrappedJsonObject {
      * @param def Default value
      * @see #getProperty(String)
      */
-    long getInt(String name, long def);
+    long getInt(String name, int def);
 
     // Floating-point properties
 

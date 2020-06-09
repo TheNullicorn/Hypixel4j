@@ -30,6 +30,26 @@ public abstract class ComplexAPIResponse extends APIResponse implements WrappedJ
         return GsonUtil.getBool(name, def, getRaw());
     }
 
+    // Long integer properties
+
+    /**
+     * @return The long integer value of the property, or 0 if it does not exist
+     * @see #getProperty(String)
+     */
+    @Override
+    public long getLong(String name) {
+        return GsonUtil.getLong(name, getRaw());
+    }
+
+    /**
+     * @param def Default value
+     * @see #getProperty(String)
+     */
+    @Override
+    public long getLong(String name, long def) {
+        return GsonUtil.getLong(name, def, getRaw());
+    }
+
     // Integer properties
 
     /**
@@ -46,7 +66,7 @@ public abstract class ComplexAPIResponse extends APIResponse implements WrappedJ
      * @see #getProperty(String)
      */
     @Override
-    public long getInt(String name, long def) {
+    public long getInt(String name, int def) {
         return GsonUtil.getInt(name, def, getRaw());
     }
 

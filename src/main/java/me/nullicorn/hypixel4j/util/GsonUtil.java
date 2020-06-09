@@ -37,13 +37,23 @@ public class GsonUtil {
         return getNumber(path, def, obj).doubleValue();
     }
 
+    // ========== Long Integer ==========
+
+    public static long getLong(String path, JsonObject obj) {
+        return getLong(path, 0, obj);
+    }
+
+    public static long getLong(String path, long def, JsonObject obj) {
+        return getNumber(path, def, obj).longValue();
+    }
+
     // ========== Integer ==========
 
     public static int getInt(String path, JsonObject obj) {
         return getInt(path, 0, obj);
     }
 
-    public static int getInt(String path, long def, JsonObject obj) {
+    public static int getInt(String path, int def, JsonObject obj) {
         return getNumber(path, def, obj).intValue();
     }
 

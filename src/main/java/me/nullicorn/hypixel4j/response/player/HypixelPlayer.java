@@ -28,14 +28,14 @@ public class HypixelPlayer extends ComplexAPIResponse {
      * @return This player's total network experience points
      */
     public long getExperience() {
-        return getInt("networkExp");
+        return getLong("networkExp");
     }
 
     /**
      * @return This player's total karma count
      */
     public long getKarma() {
-        return getInt("karma");
+        return getLong("karma");
     }
 
     /**
@@ -43,7 +43,7 @@ public class HypixelPlayer extends ComplexAPIResponse {
      */
     public Date getFirstLogin() {
         if (hasProperty("firstLogin")) {
-            return new Date(getInt("firstLogin"));
+            return new Date(getLong("firstLogin"));
         }
         return null;
     }
@@ -53,7 +53,7 @@ public class HypixelPlayer extends ComplexAPIResponse {
      */
     public Date getLastLogin() {
         if (hasProperty("lastLogin")) {
-            return new Date(getInt("lastLogin"));
+            return new Date(getLong("lastLogin"));
         }
         return null;
     }
@@ -63,7 +63,7 @@ public class HypixelPlayer extends ComplexAPIResponse {
      */
     public Date getLastLogout() {
         if (hasProperty("lastLogout")) {
-            return new Date(getInt("lastLogout"));
+            return new Date(getLong("lastLogout"));
         }
         return null;
     }
@@ -85,7 +85,7 @@ public class HypixelPlayer extends ComplexAPIResponse {
      */
     @Deprecated
     public boolean isOnline() {
-        return getInt("lastLogin") > getInt("lastLogout");
+        return getLong("lastLogin") > getLong("lastLogout");
     }
 
     /**
