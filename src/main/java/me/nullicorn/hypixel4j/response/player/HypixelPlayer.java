@@ -1,10 +1,10 @@
 package me.nullicorn.hypixel4j.response.player;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.UUID;
-import lombok.Getter;
 import me.nullicorn.hypixel4j.response.ComplexAPIResponse;
 import me.nullicorn.hypixel4j.util.FormatCode;
 import me.nullicorn.hypixel4j.util.GameType;
@@ -15,9 +15,25 @@ import me.nullicorn.hypixel4j.util.UuidUtil;
  */
 public class HypixelPlayer extends ComplexAPIResponse {
 
-    @Getter
     @SerializedName("player")
-    private JsonObject raw;
+    private JsonElement raw;
+
+    @Override
+    public JsonObject getRaw() {
+        if (raw != null && raw.isJsonObject()) {
+            return raw.getAsJsonObject();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @return Whether or not this player exists in the Hypixel API; this may be false if the player
+     * has never connected to the network before
+     */
+    public boolean exists() {
+        return getRaw() != null;
+    }
 
     /**
      * @return This player's display name

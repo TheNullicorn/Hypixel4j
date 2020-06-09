@@ -59,7 +59,16 @@ class HypixelAPITest {
         waiter.await(10, TimeUnit.SECONDS);
     }
 
+    @Test
+    public void testFetchPlayerSync_NonExistent() throws ApiException {
+        UUID nullPlayerUuid = UUID.fromString("58c87d5b-8c2d-42f9-a24c-df6f62aa9564");
+        HypixelPlayer player = api.getPlayerSync(nullPlayerUuid);
+        Assertions.assertFalse(player.exists());
+    }
+
     private static void checkPlayer(HypixelPlayer player) {
+        Assertions.assertTrue(player.exists());
+
         System.out.println("Display Name:     " + player.getRankPrefix() + " " + player.getName());
         System.out.println("UUID:             " + player.getUuid());
         System.out.println("Exp:              " + player.getExperience());
