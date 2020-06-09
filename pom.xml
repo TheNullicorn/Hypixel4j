@@ -76,6 +76,7 @@
             <groupId>com.github.jhalterman</groupId>
             <artifactId>concurrentunit</artifactId>
             <version>master-concurrentunit-0.4.6-g0987893-2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
