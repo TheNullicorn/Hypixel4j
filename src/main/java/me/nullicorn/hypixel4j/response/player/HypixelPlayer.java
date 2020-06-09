@@ -1,18 +1,16 @@
 package me.nullicorn.hypixel4j.response.player;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import lombok.Getter;
-import me.nullicorn.hypixel4j.response.APIResponse;
+import me.nullicorn.hypixel4j.response.ComplexAPIResponse;
 import me.nullicorn.hypixel4j.util.FormatCode;
-import me.nullicorn.hypixel4j.util.GsonUtil;
 
 /**
  * Created by Ben on 6/8/20 @ 7:25 PM
  */
-public class HypixelPlayer extends APIResponse {
+public class HypixelPlayer extends ComplexAPIResponse {
 
     @Getter
     @SerializedName("player")
@@ -139,95 +137,5 @@ public class HypixelPlayer extends APIResponse {
     private boolean hasRankInField(String name) {
         String value = getStr(name, "NONE");
         return !value.isEmpty() && !value.equals("NONE") && !value.equals("NORMAL");
-    }
-
-    // ==================== PROPERTY GETTERS ====================
-
-    // Boolean properties
-
-    /**
-     * @return The boolean value of the property, or false if it does not exist
-     * @see #getProperty(String)
-     */
-    public boolean getBool(String name) {
-        return GsonUtil.getBool(name, raw);
-    }
-
-    /**
-     * @param def Default value
-     * @see #getProperty(String)
-     */
-    public boolean getBool(String name, boolean def) {
-        return GsonUtil.getBool(name, def, raw);
-    }
-
-    // Integer properties
-
-    /**
-     * @return The integer value of the property, or 0 if it does not exist
-     * @see #getProperty(String)
-     */
-    public long getInt(String name) {
-        return GsonUtil.getInt(name, raw);
-    }
-
-    /**
-     * @param def Default value
-     * @see #getProperty(String)
-     */
-    public long getInt(String name, long def) {
-        return GsonUtil.getInt(name, def, raw);
-    }
-
-    // Floating-point properties
-
-    /**
-     * @return The float value of the property, or 0.0D if it does not exist
-     * @see #getProperty(String)
-     */
-    public double getFloat(String name) {
-        return GsonUtil.getFloat(name, raw);
-    }
-
-    /**
-     * @param def Default value
-     * @see #getProperty(String)
-     */
-    public double getFloat(String name, double def) {
-        return GsonUtil.getFloat(name, def, raw);
-    }
-
-    // String properties
-
-    /**
-     * @return The string value of the property, or an empty string if it does not exist
-     * @see #getProperty(String)
-     */
-    public String getStr(String name) {
-        return GsonUtil.getString(name, raw);
-    }
-
-    /**
-     * @param def Default value
-     * @see #getProperty(String)
-     */
-    public String getStr(String name, String def) {
-        return GsonUtil.getString(name, def, raw);
-    }
-
-    /**
-     * @param name Dot-notation path to the property
-     * @return Whether or not the property exists
-     */
-    public boolean hasProperty(String name) {
-        return getProperty(name) != null;
-    }
-
-    /**
-     * @param name Dot-notation path to the property
-     * @return The value of the property, or null if it does not exist
-     */
-    public JsonElement getProperty(String name) {
-        return GsonUtil.get(raw, name);
     }
 }
