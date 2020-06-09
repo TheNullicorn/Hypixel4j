@@ -3,6 +3,7 @@ package me.nullicorn.hypixel4j.response.player;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
+import java.util.Date;
 import lombok.Getter;
 import me.nullicorn.hypixel4j.response.APIResponse;
 import me.nullicorn.hypixel4j.util.FormatCode;
@@ -36,6 +37,36 @@ public class HypixelPlayer extends APIResponse {
      */
     public long getKarma() {
         return getInt("karma");
+    }
+
+    /**
+     * @return The player's first login date, or null if it is unknown
+     */
+    public Date getFirstLogin() {
+        if (hasProperty("firstLogin")) {
+            return new Date(getInt("firstLogin"));
+        }
+        return null;
+    }
+
+    /**
+     * @return The player's last login date, or null if it is unknown
+     */
+    public Date getLastLogin() {
+        if (hasProperty("lastLogin")) {
+            return new Date(getInt("lastLogin"));
+        }
+        return null;
+    }
+
+    /**
+     * @return The player's last logout date, or null if it is unknown
+     */
+    public Date getLastLogout() {
+        if (hasProperty("lastLogout")) {
+            return new Date(getInt("lastLogout"));
+        }
+        return null;
     }
 
     /**
