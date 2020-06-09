@@ -14,6 +14,7 @@ import me.nullicorn.hypixel4j.exception.ApiException;
 import me.nullicorn.hypixel4j.exception.KeyThrottleException;
 import me.nullicorn.hypixel4j.response.APIResponse;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
+import me.nullicorn.hypixel4j.util.UuidUtil;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -49,12 +50,12 @@ public class HypixelAPI {
 
     public CompletableFuture<HypixelPlayer> getPlayer(UUID uuid) {
         return fetch(HypixelPlayer.class, "player",
-            Collections.singletonMap("uuid", formatUuid(uuid)));
+            Collections.singletonMap("uuid", UuidUtil.undash(uuid)));
     }
 
     public HypixelPlayer getPlayerSync(UUID uuid) throws ApiException {
         return fetchSync(HypixelPlayer.class, "player",
-            Collections.singletonMap("uuid", formatUuid(uuid)));
+            Collections.singletonMap("uuid", UuidUtil.undash(uuid)));
     }
 
     protected <T extends APIResponse> CompletableFuture<T> fetch(Class<T> type, String endpoint,
@@ -102,10 +103,6 @@ public class HypixelAPI {
         } catch (IOException | URISyntaxException e) {
             throw new ApiException("Failed to make API request", e);
         }
-    }
-
-    private String formatUuid(UUID uuid) {
-        return uuid.toString().replace("-", "");
     }
 
     public void shutdown() {
