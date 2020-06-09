@@ -7,6 +7,7 @@
     <groupId>me.nullicorn</groupId>
     <artifactId>hypixel4j</artifactId>
     <version>0.0.1</version>
+    <packaging>pom</packaging>
     <name>Hypixel4j</name>
 
     <properties>
