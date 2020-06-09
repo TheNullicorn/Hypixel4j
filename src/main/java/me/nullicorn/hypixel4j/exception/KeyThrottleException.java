@@ -21,7 +21,8 @@ public class KeyThrottleException extends ApiException {
         super(cause);
     }
 
-    public KeyThrottleException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public KeyThrottleException(String message, Throwable cause, boolean enableSuppression,
+        boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

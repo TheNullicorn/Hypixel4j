@@ -48,14 +48,17 @@ public class HypixelAPI {
     }
 
     public CompletableFuture<HypixelPlayer> getPlayer(UUID uuid) {
-        return fetch(HypixelPlayer.class, "player", Collections.singletonMap("uuid", formatUuid(uuid)));
+        return fetch(HypixelPlayer.class, "player",
+            Collections.singletonMap("uuid", formatUuid(uuid)));
     }
 
     public HypixelPlayer getPlayerSync(UUID uuid) throws ApiException {
-        return fetchSync(HypixelPlayer.class, "player", Collections.singletonMap("uuid", formatUuid(uuid)));
+        return fetchSync(HypixelPlayer.class, "player",
+            Collections.singletonMap("uuid", formatUuid(uuid)));
     }
 
-    protected <T extends APIResponse> CompletableFuture<T> fetch(Class<T> type, String endpoint, Map<String, Object> params) {
+    protected <T extends APIResponse> CompletableFuture<T> fetch(Class<T> type, String endpoint,
+        Map<String, Object> params) {
         CompletableFuture<T> future = new CompletableFuture<>();
 
         executor.submit(() -> {
@@ -71,7 +74,8 @@ public class HypixelAPI {
         return future;
     }
 
-    protected <T extends APIResponse> T fetchSync(final Class<T> type, String endpoint, Map<String, Object> params) throws ApiException {
+    protected <T extends APIResponse> T fetchSync(final Class<T> type, String endpoint,
+        Map<String, Object> params) throws ApiException {
         try {
             // Build request url
             URIBuilder ub = new URIBuilder()

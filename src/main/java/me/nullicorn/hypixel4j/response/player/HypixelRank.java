@@ -58,7 +58,8 @@ public enum HypixelRank {
      * Read a Hypixel rank from a string
      *
      * @param key Input string
-     * @return The corresponding HypixelRank, or HypixelRank.DEFAULT if the input matched no known rank
+     * @return The corresponding HypixelRank, or HypixelRank.DEFAULT if the input matched no known
+     * rank
      */
     public static HypixelRank from(String key) {
         HypixelRank value = ENUM_MAP.get(key.toUpperCase());

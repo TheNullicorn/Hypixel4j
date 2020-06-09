@@ -19,7 +19,8 @@ public class GsonUtil {
 
     public static boolean getBool(String path, boolean def, JsonObject obj) {
         JsonElement result = get(obj, path);
-        if (result == null || !result.isJsonPrimitive() || !result.getAsJsonPrimitive().isBoolean()) {
+        if (result == null || !result.isJsonPrimitive() || !result.getAsJsonPrimitive()
+            .isBoolean()) {
             return def;
 
         } else {
@@ -65,7 +66,8 @@ public class GsonUtil {
 
     public static Number getNumber(String path, Number def, JsonObject obj) {
         JsonElement result = get(obj, path);
-        if (result == null || !result.isJsonPrimitive() || !result.getAsJsonPrimitive().isNumber()) {
+        if (result == null || !result.isJsonPrimitive() || !result.getAsJsonPrimitive()
+            .isNumber()) {
             return def;
 
         } else {
@@ -81,7 +83,8 @@ public class GsonUtil {
 
     public static String getString(String path, String def, JsonObject obj) {
         JsonElement result = get(obj, path);
-        if (result == null || !result.isJsonPrimitive() || !result.getAsJsonPrimitive().isString()) {
+        if (result == null || !result.isJsonPrimitive() || !result.getAsJsonPrimitive()
+            .isString()) {
             return def;
 
         } else {

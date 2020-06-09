@@ -98,7 +98,8 @@ public class HypixelPlayer extends ComplexAPIResponse {
     }
 
     /**
-     * @return The type of the player's most recently-played game, or {@link GameType#UNKNOWN} if it is unknown
+     * @return The type of the player's most recently-played game, or {@link GameType#UNKNOWN} if it
+     * is unknown
      */
     public GameType getMostRecentGameType() {
         if (hasProperty("mostRecentGameType")) {
@@ -118,7 +119,8 @@ public class HypixelPlayer extends ComplexAPIResponse {
     }
 
     /**
-     * @return Whether or not this player has a rank; prefixes do not count (as they are only cosmetic)
+     * @return Whether or not this player has a rank; prefixes do not count (as they are only
+     * cosmetic)
      */
     public boolean hasRank() {
         return hasRankInField("rank")
@@ -173,7 +175,8 @@ public class HypixelPlayer extends ComplexAPIResponse {
     }
 
     /**
-     * Utility method to check whether a rank field contains a valid ranks. If the field's value is NONE or NORMAL, false is returned
+     * Utility method to check whether a rank field contains a valid ranks. If the field's value is
+     * NONE or NORMAL, false is returned
      *
      * @return Whether or not the specified field contains an active rank value
      */
