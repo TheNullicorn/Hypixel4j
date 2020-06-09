@@ -66,7 +66,7 @@ class HypixelAPITest {
         System.out.println("Karma:            " + player.getKarma());
         System.out.println("Has Rank:         " + player.hasRank());
         System.out.println("Is Build Team:    " + player.isOnBuildTeam());
-        System.out.println("-------------------------");
+        System.out.println("\n");
         System.out.println("Online:           " + player.isOnline());
         System.out.println("First Joined:     " + player.getFirstLogin());
         System.out.println("Last Joined:      " + player.getLastLogin());
