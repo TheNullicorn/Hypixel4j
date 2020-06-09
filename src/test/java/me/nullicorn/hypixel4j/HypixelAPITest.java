@@ -34,7 +34,7 @@ class HypixelAPITest {
 
     @Test
     public void testFetchPlayerSync() throws ApiException {
-        HypixelPlayer player = api.getPlayerSync(sampleUuid);
+        HypixelPlayer player = api.getPlayer(sampleUuid);
         checkPlayer(player);
     }
 
@@ -42,7 +42,7 @@ class HypixelAPITest {
     public void testFetchPlayerAsync() throws InterruptedException, TimeoutException {
         final Waiter waiter = new Waiter();
 
-        api.getPlayer(sampleUuid).whenComplete((player, error) -> {
+        api.getPlayerAsync(sampleUuid).whenComplete((player, error) -> {
             if (error != null) {
                 waiter.fail(error);
                 return;
@@ -62,7 +62,7 @@ class HypixelAPITest {
     @Test
     public void testFetchPlayerSync_NonExistent() throws ApiException {
         UUID nullPlayerUuid = UUID.fromString("58c87d5b-8c2d-42f9-a24c-df6f62aa9564");
-        HypixelPlayer player = api.getPlayerSync(nullPlayerUuid);
+        HypixelPlayer player = api.getPlayer(nullPlayerUuid);
         Assertions.assertFalse(player.exists());
     }
 

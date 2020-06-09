@@ -36,6 +36,21 @@ public class HypixelAPI {
     protected final HttpClient      httpClient;
     protected final Header[]        requestHeaders;
 
+    /**
+     * Construct using the designated API key. Te default User-Agent is used
+     *
+     * @param apiKey API key used to access the Hypixel API
+     */
+    public HypixelAPI(UUID apiKey) {
+        this(apiKey, "Hypixel4j/0.0.1 (Generic Application)");
+    }
+
+    /**
+     * Construct using the designated API key
+     *
+     * @param apiKey    API key used to access the Hypixel API
+     * @param userAgent User-agent sent with requests to the API
+     */
     public HypixelAPI(UUID apiKey, String userAgent) {
         this.apiKey = apiKey;
         executor = Executors.newCachedThreadPool();
@@ -48,23 +63,37 @@ public class HypixelAPI {
         requestHeaders[2] = new BasicHeader("Cache-Control", "no-store");
     }
 
-    public CompletableFuture<HypixelPlayer> getPlayer(UUID uuid) {
+    /**
+     * Async method for getting a Hypixel player
+     *
+     * @see #getPlayer(UUID) Synchronous version
+     */
+    public CompletableFuture<HypixelPlayer> getPlayerAsync(UUID uuid) {
+        return fetchAsync(HypixelPlayer.class, "player",
+            Collections.singletonMap("uuid", UuidUtil.undash(uuid)));
+    }
+
+    /**
+     * Get a player object from the Hypixel API
+     *
+     * @param uuid Minecraft UUID of the requested player
+     * @return A HypixelPlayer object representing the requested player
+     * @throws ApiException If the request could not be made, or if the Hypixel API returned an
+     *                      error
+     */
+    public HypixelPlayer getPlayer(UUID uuid) throws ApiException {
         return fetch(HypixelPlayer.class, "player",
             Collections.singletonMap("uuid", UuidUtil.undash(uuid)));
     }
 
-    public HypixelPlayer getPlayerSync(UUID uuid) throws ApiException {
-        return fetchSync(HypixelPlayer.class, "player",
-            Collections.singletonMap("uuid", UuidUtil.undash(uuid)));
-    }
-
-    protected <T extends APIResponse> CompletableFuture<T> fetch(Class<T> type, String endpoint,
+    protected <T extends APIResponse> CompletableFuture<T> fetchAsync(Class<T> type,
+        String endpoint,
         Map<String, Object> params) {
         CompletableFuture<T> future = new CompletableFuture<>();
 
         executor.submit(() -> {
             try {
-                T response = fetchSync(type, endpoint, params);
+                T response = fetch(type, endpoint, params);
                 future.complete(response);
 
             } catch (Exception e) {
@@ -75,7 +104,7 @@ public class HypixelAPI {
         return future;
     }
 
-    protected <T extends APIResponse> T fetchSync(final Class<T> type, String endpoint,
+    protected <T extends APIResponse> T fetch(final Class<T> type, String endpoint,
         Map<String, Object> params) throws ApiException {
         try {
             // Build request url
