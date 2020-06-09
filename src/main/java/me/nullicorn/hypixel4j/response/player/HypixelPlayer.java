@@ -149,8 +149,10 @@ public class HypixelPlayer extends ComplexAPIResponse {
         }
 
         return getHighestRank().getPrefix(
-            FormatCode.from(getStr("monthlyRankColor", "GOLD")), // Default MVP++ tag color is gold
-            FormatCode.from(getStr("rankPlusColor", "RED")) // Default MVP+/MVP++ plus color is light red
+            FormatCode.fromName(getStr("monthlyRankColor", "GOLD")),
+            // Default MVP++ tag color is gold
+            FormatCode.fromName(getStr("rankPlusColor", "RED"))
+            // Default MVP+/MVP++ plus color is light red
         );
     }
 
