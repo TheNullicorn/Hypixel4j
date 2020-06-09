@@ -3,10 +3,12 @@ package me.nullicorn.hypixel4j.response.player;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
+import java.util.UUID;
 import lombok.Getter;
 import me.nullicorn.hypixel4j.response.ComplexAPIResponse;
 import me.nullicorn.hypixel4j.util.FormatCode;
 import me.nullicorn.hypixel4j.util.GameType;
+import me.nullicorn.hypixel4j.util.UuidUtil;
 
 /**
  * Created by Ben on 6/8/20 @ 7:25 PM
@@ -22,6 +24,17 @@ public class HypixelPlayer extends ComplexAPIResponse {
      */
     public String getName() {
         return getStr("displayname", "Unknown");
+    }
+
+    /**
+     * @return The player's Minecraft UUID, or null if it could not be found
+     */
+    public UUID getUuid() {
+        if (hasProperty("uuid")) {
+            return UuidUtil.fromUndashed(getStr("uuid"));
+        } else {
+            return null;
+        }
     }
 
     /**

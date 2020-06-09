@@ -6,6 +6,7 @@ import java.util.concurrent.TimeoutException;
 import me.nullicorn.hypixel4j.exception.ApiException;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
 import net.jodah.concurrentunit.Waiter;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +35,7 @@ class HypixelAPITest {
     @Test
     public void testFetchPlayerSync() throws ApiException {
         HypixelPlayer player = api.getPlayerSync(sampleUuid);
-        printPlayer(player);
+        checkPlayer(player);
     }
 
     @Test
@@ -43,18 +44,24 @@ class HypixelAPITest {
 
         api.getPlayer(sampleUuid).whenComplete((player, error) -> {
             if (error != null) {
-                error.printStackTrace();
+                waiter.fail(error);
                 return;
             }
-            printPlayer(player);
-            waiter.resume();
+
+            try {
+                checkPlayer(player);
+                waiter.resume();
+            } catch (Throwable t) {
+                waiter.fail(t);
+            }
         });
 
         waiter.await(10, TimeUnit.SECONDS);
     }
 
-    private static void printPlayer(HypixelPlayer player) {
+    private static void checkPlayer(HypixelPlayer player) {
         System.out.println("Display Name:     " + player.getRankPrefix() + " " + player.getName());
+        System.out.println("UUID:             " + player.getUuid());
         System.out.println("Exp:              " + player.getExperience());
         System.out.println("Karma:            " + player.getKarma());
         System.out.println("Has Rank:         " + player.hasRank());
@@ -66,5 +73,7 @@ class HypixelAPITest {
         System.out.println("Last Quit:        " + player.getLastLogout());
         System.out.println("Most Recent Game: " + player.getMostRecentGameType());
         System.out.println("-------------------------");
+
+        Assertions.assertEquals(sampleUuid, player.getUuid());
     }
 }
