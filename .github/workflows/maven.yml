@@ -24,4 +24,4 @@ jobs:
       - name: Run Tests
         env:
           API_KEY: ${{ secrets.TESTS_API_KEY }}
-        run: mvn surefire:test -DapiKey=$API_KEY -f pom.xml
+        run: mvn surefire:test -f pom.xml

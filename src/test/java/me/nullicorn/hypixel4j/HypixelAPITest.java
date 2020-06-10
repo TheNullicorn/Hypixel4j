@@ -20,7 +20,7 @@ class HypixelAPITest {
 
     @BeforeAll
     public static void createApi() {
-        String keyValue = System.getProperty("apiKey");
+        String keyValue = System.getenv("API_KEY");
 
         if (keyValue == null || keyValue.isEmpty()) {
             System.err.println("\"apiKey\" property must be set!");
