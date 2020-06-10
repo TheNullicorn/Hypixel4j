@@ -102,6 +102,9 @@ public class GsonUtil {
     public static JsonElement get(JsonObject obj, String path, String separator) {
         if (path.trim().isEmpty()) {
             return obj;
+
+        } else if (obj == null) {
+            return null;
         }
 
         String[] pathParts = path.split(separator);
