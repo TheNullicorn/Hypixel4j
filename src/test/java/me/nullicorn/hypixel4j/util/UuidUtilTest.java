@@ -9,23 +9,32 @@ import org.junit.jupiter.api.Test;
  */
 class UuidUtilTest {
 
+    /**
+     * A sample UUID object
+     */
+    private static final UUID SAMPLE_UUID = UUID
+        .fromString("8614fb2d-e71d-4675-95dc-d7da3d977eae");
+
+    /**
+     * Stringified version of {@link #SAMPLE_UUID} without hyphens (32 chars)
+     */
+    private static final String TRIMMED_UUID = "8614fb2de71d467595dcd7da3d977eae";
+
     @Test
-    void test_UuidFromUndashedUuidStr() {
-        UUID actual = UuidUtil.fromUndashed("8614fb2de71d467595dcd7da3d977eae");
-        UUID expected = UUID.fromString("8614fb2d-e71d-4675-95dc-d7da3d977eae");
-        Assertions.assertEquals(expected, actual);
+    void test_uuidFromTrimmed() {
+        UUID actual = UuidUtil.fromUndashed(TRIMMED_UUID);
+        Assertions.assertEquals(SAMPLE_UUID, actual);
     }
 
     @Test
-    void test_undashUuid() {
-        String actual = UuidUtil.undash(UUID.fromString("8614fb2d-e71d-4675-95dc-d7da3d977eae"));
-        String expected = "8614fb2de71d467595dcd7da3d977eae";
-        Assertions.assertEquals(expected, actual);
+    void test_trimUuid() {
+        String actual = UuidUtil.undash(SAMPLE_UUID);
+        Assertions.assertEquals(TRIMMED_UUID, actual);
     }
 
     @Test
-    void test_checkIfUuid() {
-        Assertions.assertTrue(UuidUtil.isUuid("8614fb2d-e71d-4675-95dc-d7da3d977eae"));
-        Assertions.assertTrue(UuidUtil.isUuid("8614fb2de71d467595dcd7da3d977eae"));
+    void test_checkIfStringIsUuid() {
+        Assertions.assertTrue(UuidUtil.isUuid(SAMPLE_UUID.toString()));
+        Assertions.assertTrue(UuidUtil.isUuid(TRIMMED_UUID));
     }
 }

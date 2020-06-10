@@ -16,11 +16,13 @@ import org.junit.jupiter.api.Test;
  */
 class HypixelAPITest {
 
-    static HypixelAPI api;
-    static UUID       sampleUuid;
+    /**
+     * A basic HypixelAPI instance used to test requests
+     */
+    private static HypixelAPI api;
 
     @BeforeAll
-    public static void createApi() {
+    static void createApi() {
         String keyValue = System.getenv("API_KEY");
 
         if (keyValue == null || keyValue.isEmpty()) {
@@ -29,8 +31,6 @@ class HypixelAPITest {
         } else {
             api = new HypixelAPI(UUID.fromString(keyValue), "Hypixel4j/0.0.1 (test env)");
         }
-
-        sampleUuid = UUID.fromString("8614fb2d-e71d-4675-95dc-d7da3d977eae");
     }
 
     /*
@@ -38,23 +38,25 @@ class HypixelAPITest {
      */
 
     @Test
-    public void testFetchPlayerSync() throws ApiException {
-        HypixelPlayer player = api.getPlayer(sampleUuid);
-        checkPlayer(player);
+    void test_fetchPlayer_Sync() throws ApiException {
+        HypixelPlayer player = api.getPlayer(APITestConstants.SAMPLE_PLAYER_UUID);
+        Assertions.assertTrue(player.exists());
+        Assertions.assertEquals(APITestConstants.SAMPLE_PLAYER_UUID, player.getUuid());
     }
 
     @Test
-    public void testFetchPlayerAsync() throws InterruptedException, TimeoutException {
+    void test_fetchPlayer_Async() throws InterruptedException, TimeoutException {
         final Waiter waiter = new Waiter();
 
-        api.getPlayerAsync(sampleUuid).whenComplete((player, error) -> {
+        api.getPlayerAsync(APITestConstants.SAMPLE_PLAYER_UUID).whenComplete((player, error) -> {
             if (error != null) {
                 waiter.fail(error);
                 return;
             }
 
             try {
-                checkPlayer(player);
+                Assertions.assertTrue(player.exists());
+                Assertions.assertEquals(APITestConstants.SAMPLE_PLAYER_UUID, player.getUuid());
                 waiter.resume();
             } catch (Throwable t) {
                 waiter.fail(t);
@@ -65,9 +67,8 @@ class HypixelAPITest {
     }
 
     @Test
-    public void testFetchPlayerSync_NonExistent() throws ApiException {
-        UUID nullPlayerUuid = UUID.fromString("58c87d5b-8c2d-42f9-a24c-df6f62aa9564");
-        HypixelPlayer player = api.getPlayer(nullPlayerUuid);
+    void test_fetchPlayer_Sync_NonExistent() throws ApiException {
+        HypixelPlayer player = api.getPlayer(APITestConstants.NULL_PLAYER_UUID);
         Assertions.assertFalse(player.exists());
     }
 
@@ -77,29 +78,8 @@ class HypixelAPITest {
 
     @Test
     void test_fetchGuildSync_ById() throws ApiException {
-        String guildId = "52e57a1c0cf2e250d1cd00f8";
-        HypixelGuild guild = api.getGuildById(guildId);
+        HypixelGuild guild = api.getGuildById(APITestConstants.SAMPLE_GUILD_ID);
         Assertions.assertTrue(guild.exists());
-        Assertions.assertEquals(guildId, guild.getId());
-    }
-
-    private static void checkPlayer(HypixelPlayer player) {
-        Assertions.assertTrue(player.exists());
-
-        System.out.println("Display Name:     " + player.getRankPrefix() + " " + player.getName());
-        System.out.println("UUID:             " + player.getUuid());
-        System.out.println("Exp:              " + player.getExperience());
-        System.out.println("Karma:            " + player.getKarma());
-        System.out.println("Has Rank:         " + player.hasRank());
-        System.out.println("Is Build Team:    " + player.isOnBuildTeam());
-        System.out.println("\n");
-        System.out.println("Online:           " + player.isOnline());
-        System.out.println("First Joined:     " + player.getFirstLogin());
-        System.out.println("Last Joined:      " + player.getLastLogin());
-        System.out.println("Last Quit:        " + player.getLastLogout());
-        System.out.println("Most Recent Game: " + player.getMostRecentGameType());
-        System.out.println("-------------------------");
-
-        Assertions.assertEquals(sampleUuid, player.getUuid());
+        Assertions.assertEquals(APITestConstants.SAMPLE_GUILD_ID, guild.getId());
     }
 }

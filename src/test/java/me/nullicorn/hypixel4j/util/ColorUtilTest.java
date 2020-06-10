@@ -8,8 +8,13 @@ import org.junit.jupiter.api.Test;
  */
 class ColorUtilTest {
 
-    // Taken from https://minecraft.gamepedia.com/Formatting_codes#Sample_text
-    static String sampleText = "§nMinecraft Formatting§r\n"
+    /**
+     * Sample text using every Minecraft formatting code
+     *
+     * @see <a href=https://minecraft.gamepedia.com/Formatting_codes#Sample_text>Taken from the
+     * wiki</a>
+     */
+    private static final String SAMPLE_TEXT = "§nMinecraft Formatting§r\n"
         + "\n"
         + "§00 §11 §22 §33\n"
         + "§44 §55 §66 §77\n"
@@ -23,7 +28,10 @@ class ColorUtilTest {
         + "§ro §oMinecraft\n"
         + "§rr §rMinecraft";
 
-    static String sampleTextExpected = "<span>"
+    /**
+     * Pre-HTML-formatted version of {@link #SAMPLE_TEXT}
+     */
+    private static final String SAMPLE_TEXT_HTML = "<span>"
         + "<span style=\"text-decoration:underline;\">Minecraft Formatting</span>"
         + "<span style=\"color:#000000;\"><br><br>0 </span>"
         + "<span style=\"color:#0000AA;\">1 </span>"
@@ -54,9 +62,15 @@ class ColorUtilTest {
         + "<span style=\"color:#000000;\">r Minecraft</span>"
         + "</span>";
 
-    static String sampleUsername = "§b[MVP§c+§b] Nullicorn";
+    /**
+     * A sample Hypixel display name (including rank tag) formatted using Minecraft's color codes
+     */
+    private static final String SAMPLE_USERNAME = "§b[MVP§c+§b] Nullicorn";
 
-    static String sampleUsernameExpected = "<span>"
+    /**
+     * Pre-HTML-formatted version of {@link #SAMPLE_USERNAME}
+     */
+    private static final String SAMPLE_USERNAME_HTML = "<span>"
         + "<span style=\"color:#55FFFF;\">[MVP</span>"
         + "<span style=\"color:#FF5555;\">+</span>"
         + "<span style=\"color:#55FFFF;\">] Nullicorn</span>"
@@ -65,17 +79,17 @@ class ColorUtilTest {
     @Test
     void test_formattedStringToHtml() {
         // Username
-        Assertions.assertEquals(sampleUsernameExpected, ColorUtil.asStyledHtml(sampleUsername));
+        Assertions.assertEquals(SAMPLE_USERNAME_HTML, ColorUtil.asStyledHtml(SAMPLE_USERNAME));
 
         // Paragraph of text
-        Assertions.assertEquals(sampleTextExpected, ColorUtil.asStyledHtml(sampleText));
+        Assertions.assertEquals(SAMPLE_TEXT_HTML, ColorUtil.asStyledHtml(SAMPLE_TEXT));
     }
 
     @Test
     void test_getColorAtIndex() {
         Assertions.assertEquals(
             FormatCode.RED,
-            ColorUtil.getColorAtIndex(8, '§', sampleUsername)
+            ColorUtil.getColorAtIndex(8, '§', SAMPLE_USERNAME)
         );
     }
 }
