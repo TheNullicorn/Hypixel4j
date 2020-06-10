@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.UUID;
-import me.nullicorn.hypixel4j.response.ComplexAPIResponse;
+import me.nullicorn.hypixel4j.response.ComplexHypixelObject;
 import me.nullicorn.hypixel4j.util.FormatCode;
 import me.nullicorn.hypixel4j.util.GameType;
 import me.nullicorn.hypixel4j.util.UuidUtil;
@@ -13,10 +13,14 @@ import me.nullicorn.hypixel4j.util.UuidUtil;
 /**
  * Created by Ben on 6/8/20 @ 7:25 PM
  */
-public class HypixelPlayer extends ComplexAPIResponse {
+public class HypixelPlayer extends ComplexHypixelObject {
+
+    public HypixelPlayer(JsonObject data) {
+        this.raw = data;
+    }
 
     @SerializedName("player")
-    private JsonElement raw;
+    private final JsonElement raw;
 
     @Override
     public JsonObject getRaw() {

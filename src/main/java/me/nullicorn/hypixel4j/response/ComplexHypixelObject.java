@@ -1,16 +1,13 @@
 package me.nullicorn.hypixel4j.response;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import me.nullicorn.hypixel4j.data.WrappedJsonObject;
 import me.nullicorn.hypixel4j.util.GsonUtil;
 
 /**
  * Created by Ben on 6/9/20 @ 6:31 AM
  */
-public abstract class ComplexAPIResponse extends APIResponse implements WrappedJsonObject {
-
-    public abstract JsonObject getRaw();
+public abstract class ComplexHypixelObject implements WrappedJsonObject, HypixelObject {
 
     /**
      * @return The boolean value of the property, or false if it does not exist

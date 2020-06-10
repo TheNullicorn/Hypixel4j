@@ -10,11 +10,14 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import me.nullicorn.hypixel4j.adapter.HypixelPlayerTypeAdapter;
 import me.nullicorn.hypixel4j.adapter.TrimmedUUIDTypeAdapter;
 import me.nullicorn.hypixel4j.exception.ApiException;
 import me.nullicorn.hypixel4j.exception.KeyThrottleException;
 import me.nullicorn.hypixel4j.response.APIResponse;
+import me.nullicorn.hypixel4j.response.HypixelObject;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
+import me.nullicorn.hypixel4j.response.player.PlayerResponse;
 import me.nullicorn.hypixel4j.util.UuidUtil;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -32,6 +35,7 @@ public class HypixelAPI {
 
     private static final Gson gson = new GsonBuilder()
         .registerTypeAdapter(UUID.class, new TrimmedUUIDTypeAdapter())
+        .registerTypeAdapter(HypixelPlayer.class, new HypixelPlayerTypeAdapter())
         .setPrettyPrinting()
         .create();
 
@@ -73,7 +77,7 @@ public class HypixelAPI {
      * @see #getPlayer(UUID) Synchronous version
      */
     public CompletableFuture<HypixelPlayer> getPlayerAsync(UUID uuid) {
-        return fetchAsync(HypixelPlayer.class, "player",
+        return fetchAsync(PlayerResponse.class, "player",
             Collections.singletonMap("uuid", UuidUtil.undash(uuid)));
     }
 
@@ -86,13 +90,11 @@ public class HypixelAPI {
      *                      error
      */
     public HypixelPlayer getPlayer(UUID uuid) throws ApiException {
-        return fetch(HypixelPlayer.class, "player",
+        return fetch(PlayerResponse.class, "player",
             Collections.singletonMap("uuid", UuidUtil.undash(uuid)));
     }
 
-    protected <T extends APIResponse> CompletableFuture<T> fetchAsync(Class<T> type,
-        String endpoint,
-        Map<String, Object> params) {
+    protected <T extends HypixelObject> CompletableFuture<T> fetchAsync(Class<? extends APIResponse<T>> type, String endpoint, Map<String, Object> params) {
         CompletableFuture<T> future = new CompletableFuture<>();
 
         executor.submit(() -> {
@@ -108,8 +110,8 @@ public class HypixelAPI {
         return future;
     }
 
-    protected <T extends APIResponse> T fetch(final Class<T> type, String endpoint,
-        Map<String, Object> params) throws ApiException {
+    protected <T extends HypixelObject> T fetch(final Class<? extends APIResponse<T>> type, String endpoint, Map<String, Object> params)
+        throws ApiException {
         try {
             // Build request url
             URIBuilder ub = new URIBuilder()
@@ -123,7 +125,8 @@ public class HypixelAPI {
             request.setHeaders(requestHeaders);
 
             HttpResponse response = httpClient.execute(request);
-            T apiResponse = gson.fromJson(EntityUtils.toString(response.getEntity()), type);
+            APIResponse<T> apiResponse = gson
+                .fromJson(EntityUtils.toString(response.getEntity()), type);
 
             if (!apiResponse.isSuccessful()) {
                 throw new ApiException(apiResponse.getError());
@@ -131,7 +134,7 @@ public class HypixelAPI {
                 throw new KeyThrottleException();
             }
 
-            return apiResponse;
+            return apiResponse.getPayload();
 
         } catch (IOException | URISyntaxException e) {
             throw new ApiException("Failed to make API request", e);
