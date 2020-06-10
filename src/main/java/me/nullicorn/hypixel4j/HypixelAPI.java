@@ -10,6 +10,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import me.nullicorn.hypixel4j.adapter.TrimmedUUIDTypeAdapter;
 import me.nullicorn.hypixel4j.exception.ApiException;
 import me.nullicorn.hypixel4j.exception.KeyThrottleException;
 import me.nullicorn.hypixel4j.response.APIResponse;
@@ -29,7 +30,10 @@ import org.apache.http.util.EntityUtils;
  */
 public class HypixelAPI {
 
-    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final Gson gson = new GsonBuilder()
+        .registerTypeAdapter(UUID.class, new TrimmedUUIDTypeAdapter())
+        .setPrettyPrinting()
+        .create();
 
     protected final UUID            apiKey;
     protected final ExecutorService executor;
