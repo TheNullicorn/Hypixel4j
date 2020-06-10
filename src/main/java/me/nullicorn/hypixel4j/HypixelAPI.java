@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -12,10 +13,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import me.nullicorn.hypixel4j.adapter.HypixelPlayerTypeAdapter;
 import me.nullicorn.hypixel4j.adapter.TrimmedUUIDTypeAdapter;
+import me.nullicorn.hypixel4j.adapter.UnixTimestampTypeAdapter;
 import me.nullicorn.hypixel4j.exception.ApiException;
 import me.nullicorn.hypixel4j.exception.KeyThrottleException;
 import me.nullicorn.hypixel4j.response.APIResponse;
 import me.nullicorn.hypixel4j.response.HypixelObject;
+import me.nullicorn.hypixel4j.response.guild.GuildResponse;
+import me.nullicorn.hypixel4j.response.guild.HypixelGuild;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
 import me.nullicorn.hypixel4j.response.player.PlayerResponse;
 import me.nullicorn.hypixel4j.util.UuidUtil;
@@ -34,6 +38,7 @@ import org.apache.http.util.EntityUtils;
 public class HypixelAPI {
 
     private static final Gson gson = new GsonBuilder()
+        .registerTypeAdapter(Date.class, new UnixTimestampTypeAdapter())
         .registerTypeAdapter(UUID.class, new TrimmedUUIDTypeAdapter())
         .registerTypeAdapter(HypixelPlayer.class, new HypixelPlayerTypeAdapter())
         .setPrettyPrinting()
@@ -92,6 +97,27 @@ public class HypixelAPI {
     public HypixelPlayer getPlayer(UUID uuid) throws ApiException {
         return fetch(PlayerResponse.class, "player",
             Collections.singletonMap("uuid", UuidUtil.undash(uuid)));
+    }
+
+    public HypixelGuild getGuildById(String guildId) throws ApiException {
+        if (!guildId.matches("[A-Fa-f0-9]{24}")) {
+            throw new IllegalArgumentException("Malformed guild id");
+        }
+        return fetch(GuildResponse.class, "guild",
+            Collections.singletonMap("id", guildId));
+    }
+
+    public HypixelGuild getGuildByName(String guildName) throws ApiException {
+        if (!guildName.matches("[\\w ]{3,30}")) {
+            throw new IllegalArgumentException("Malformed guild name");
+        }
+        return fetch(GuildResponse.class, "guild",
+            Collections.singletonMap("name", guildName));
+    }
+
+    public HypixelGuild getGuildByPlayer(UUID memberUuid) throws ApiException {
+        return fetch(GuildResponse.class, "guild",
+            Collections.singletonMap("player", UuidUtil.undash(memberUuid)));
     }
 
     protected <T extends HypixelObject> CompletableFuture<T> fetchAsync(Class<? extends APIResponse<T>> type, String endpoint, Map<String, Object> params) {

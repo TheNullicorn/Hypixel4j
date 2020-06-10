@@ -4,6 +4,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import me.nullicorn.hypixel4j.exception.ApiException;
+import me.nullicorn.hypixel4j.response.guild.HypixelGuild;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
 import net.jodah.concurrentunit.Waiter;
 import org.junit.jupiter.api.Assertions;
@@ -31,6 +32,10 @@ class HypixelAPITest {
 
         sampleUuid = UUID.fromString("8614fb2d-e71d-4675-95dc-d7da3d977eae");
     }
+
+    /*
+    Fetch Player
+     */
 
     @Test
     public void testFetchPlayerSync() throws ApiException {
@@ -64,6 +69,18 @@ class HypixelAPITest {
         UUID nullPlayerUuid = UUID.fromString("58c87d5b-8c2d-42f9-a24c-df6f62aa9564");
         HypixelPlayer player = api.getPlayer(nullPlayerUuid);
         Assertions.assertFalse(player.exists());
+    }
+
+    /*
+    Fetch Guild
+     */
+
+    @Test
+    void test_fetchGuildSync_ById() throws ApiException {
+        String guildId = "52e57a1c0cf2e250d1cd00f8";
+        HypixelGuild guild = api.getGuildById(guildId);
+        Assertions.assertTrue(guild.exists());
+        Assertions.assertEquals(guildId, guild.getId());
     }
 
     private static void checkPlayer(HypixelPlayer player) {
