@@ -1,7 +1,9 @@
 # Hypixel4j
+[![Release](https://jitpack.io/v/TheNullicorn/Hypixel4j.svg)](https://jitpack.io/#TheNullicorn/Hypixel4j) ![Run Tests](https://github.com/TheNullicorn/Hypixel4j/workflows/Run%20Tests/badge.svg)  
+
 A simple, easy-to-use Java wrapper for the [Hypixel API](https://api.hypixel.net/).
 
-## Installing
+## Installation
 To add Hypixel4j to your Maven project, add the JitPack repository to your `pom.xml`:
 ```xml
 <repositories>
