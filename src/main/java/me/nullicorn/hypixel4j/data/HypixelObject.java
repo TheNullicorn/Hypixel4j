@@ -1,4 +1,4 @@
-package me.nullicorn.hypixel4j.response;
+package me.nullicorn.hypixel4j.data;
 
 /**
  * The main object returned by a Hypixel API endpoint.

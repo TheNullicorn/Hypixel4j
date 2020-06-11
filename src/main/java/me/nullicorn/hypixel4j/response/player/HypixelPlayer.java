@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.UUID;
-import me.nullicorn.hypixel4j.response.ComplexHypixelObject;
+import me.nullicorn.hypixel4j.data.ComplexHypixelObject;
 import me.nullicorn.hypixel4j.util.FormatCode;
 import me.nullicorn.hypixel4j.util.GameType;
 import me.nullicorn.hypixel4j.util.UuidUtil;

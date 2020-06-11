@@ -1,7 +1,6 @@
-package me.nullicorn.hypixel4j.response;
+package me.nullicorn.hypixel4j.data;
 
 import com.google.gson.JsonElement;
-import me.nullicorn.hypixel4j.data.WrappedJsonObject;
 import me.nullicorn.hypixel4j.util.GsonUtil;
 
 /**

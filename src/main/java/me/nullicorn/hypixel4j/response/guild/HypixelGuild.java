@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import lombok.Getter;
-import me.nullicorn.hypixel4j.response.HypixelObject;
+import me.nullicorn.hypixel4j.data.HypixelObject;
 import me.nullicorn.hypixel4j.util.FormatCode;
 import me.nullicorn.hypixel4j.util.GameType;
 

@@ -2,6 +2,7 @@ package me.nullicorn.hypixel4j.response;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
+import me.nullicorn.hypixel4j.data.HypixelObject;
 
 /**
  * Created by Ben on 6/8/20 @ 5:52 PM
