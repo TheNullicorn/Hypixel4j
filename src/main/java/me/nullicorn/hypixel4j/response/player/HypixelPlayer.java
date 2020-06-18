@@ -124,6 +124,14 @@ public class HypixelPlayer extends ComplexHypixelObject {
     }
 
     /**
+     * @return The last Minecraft version that the player used to connect to Hypixel, or null if it
+     * is unknown
+     */
+    public String getLastKnownMinecraftVersion() {
+        return getStr("mcVersionRp", null);
+    }
+
+    /**
      * @return Whether or not this player is connected to Hypixel
      * @deprecated This method is not reliable. The recentGames endpoint should be used instead
      */
