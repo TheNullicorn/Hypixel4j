@@ -61,7 +61,17 @@ public class HypixelPlayer extends ComplexHypixelObject {
      * @return This player's total network experience points
      */
     public long getExperience() {
-        return getLong("networkExp");
+        long experience = getLong("networkExp");
+        experience += getTotalExpToExactLevel(getLong("networkLevel", 0) + 1);
+        return experience;
+    }
+
+    /**
+     * @return The player's precise network level (e.g. 128.64 for someone 64% of the way to level
+     * 129 from level 128)
+     */
+    public double getLevel() {
+        return getExactLevelFromExp(getExperience());
     }
 
     /**
@@ -187,5 +197,34 @@ public class HypixelPlayer extends ComplexHypixelObject {
     private boolean hasRankInField(String name) {
         String value = getStr(name, "NONE");
         return !value.isEmpty() && !value.equals("NONE") && !value.equals("NORMAL");
+    }
+
+    /**
+     * Square root of 2; stored here to avoid excessive use of sqrt()
+     */
+    private static final double SQRT_2 = StrictMath.sqrt(2);
+
+    /**
+     * Utility method to find the total amount of experience needed to get to a precise network
+     * level
+     *
+     * @param level Player's exact network level
+     * @return The total amount of network experience needed to reach that level
+     */
+    private long getTotalExpToExactLevel(double level) {
+        return -15312 + (long) StrictMath.pow(
+            (25 * SQRT_2 * level) + (125 / SQRT_2),
+            2);
+    }
+
+    /**
+     * Utility method to find the precise network level of a player given their total network
+     * experience
+     *
+     * @param exp The player's total network experience
+     * @return The exact level of a player with that amount of experience
+     */
+    private double getExactLevelFromExp(double exp) {
+        return (StrictMath.sqrt(exp + 15312.5) - (125 / SQRT_2)) / (25 * SQRT_2);
     }
 }
