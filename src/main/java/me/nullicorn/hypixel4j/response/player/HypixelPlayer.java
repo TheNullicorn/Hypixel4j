@@ -164,10 +164,7 @@ public class HypixelPlayer extends ComplexHypixelObject {
      * cosmetic)
      */
     public boolean hasRank() {
-        return hasRankInField("rank")
-            || hasRankInField("monthlyPackageRank")
-            || hasRankInField("newPackageRank")
-            || hasRankInField("packageRank");
+        return getHighestRank() != HypixelRank.DEFAULT;
     }
 
     /**
