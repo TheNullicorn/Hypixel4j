@@ -99,6 +99,16 @@ public class HypixelAPI {
             Collections.singletonMap("uuid", UuidUtil.undash(uuid)));
     }
 
+    /**
+     * Get a guild from the Hypixel API by its ID
+     *
+     * @param guildId Guild ID of the desired guild; should be a valid <a href=https://docs.mongodb.com/manual/reference/bson-types/#objectid>BSON
+     *                ObjectId</a>
+     * @return A HypixelGuild representing the requested guild; be sure to check that {@link
+     * HypixelGuild#exists()}
+     * @throws ApiException If the request could not be made, or if the Hypixel API returned an
+     *                      error
+     */
     public HypixelGuild getGuildById(String guildId) throws ApiException {
         if (!guildId.matches("[A-Fa-f0-9]{24}")) {
             throw new IllegalArgumentException("Malformed guild id");
@@ -107,6 +117,15 @@ public class HypixelAPI {
             Collections.singletonMap("id", guildId));
     }
 
+    /**
+     * Get a guild from the Hypixel API by its name
+     *
+     * @param guildName Name of the desired guild; case-insensitive
+     * @return A HypixelGuild representing the requested guild; be sure to check that {@link
+     * HypixelGuild#exists()}
+     * @throws ApiException If the request could not be made, or if the Hypixel API returned an
+     *                      error
+     */
     public HypixelGuild getGuildByName(String guildName) throws ApiException {
         if (!guildName.matches("[\\w ]{3,30}")) {
             throw new IllegalArgumentException("Malformed guild name");
@@ -115,6 +134,15 @@ public class HypixelAPI {
             Collections.singletonMap("name", guildName));
     }
 
+    /**
+     * Get a guild from the Hypixel API by one of its members' Minecraft UUIDs
+     *
+     * @param memberUuid Minecraft UUID of a member of the guild
+     * @return A HypixelGuild representing the requested guild; be sure to check that {@link
+     * HypixelGuild#exists()}
+     * @throws ApiException If the request could not be made, or if the Hypixel API returned an
+     *                      error
+     */
     public HypixelGuild getGuildByPlayer(UUID memberUuid) throws ApiException {
         return fetch(GuildResponse.class, "guild",
             Collections.singletonMap("player", UuidUtil.undash(memberUuid)));
