@@ -266,4 +266,23 @@ public class HypixelPlayer extends ComplexHypixelObject {
     private double getExactLevelFromExp(double exp) {
         return (StrictMath.sqrt(exp + 15312.5) - (125 / SQRT_2)) / (25 * SQRT_2);
     }
+
+    @Override
+    public String toString() {
+        if (!exists()) {
+            return "HypixelPlayer{exists=false}";
+        }
+
+        return "HypixelPlayer{" +
+            "exists=" + exists() +
+            ", uuid=" + getUuid() +
+            ", name=" + getName() +
+            ", hasRank=" + hasRank() +
+            ", rank=" + getHighestRank() +
+            ", networkLevel=" + getLevel() +
+            ", karma=" + getKarma() +
+            ", firstLogin=" + getFirstLogin() +
+            ", isOnBuildTeam=" + isOnBuildTeam() +
+            '}';
+    }
 }
