@@ -154,12 +154,16 @@ public class HypixelAPI {
             APIResponse<T> apiResponse = gson
                 .fromJson(EntityUtils.toString(response.getEntity()), type);
 
-            if (!apiResponse.isSuccessful()) {
-                throw new ApiException(apiResponse.getError());
-            } else if (apiResponse.isThrottled()) {
+            if (apiResponse.isThrottled()) {
+                // Key throttled
                 throw new KeyThrottleException();
+
+            } else if (!apiResponse.isSuccessful()) {
+                // Other failure
+                throw new ApiException(apiResponse.getError());
             }
 
+            // Successful response
             return apiResponse.getPayload();
 
         } catch (IOException | URISyntaxException e) {
