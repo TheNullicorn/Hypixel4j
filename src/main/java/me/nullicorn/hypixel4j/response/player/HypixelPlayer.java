@@ -133,7 +133,8 @@ public class HypixelPlayer extends ComplexHypixelObject {
 
     /**
      * @return Whether or not this player is connected to Hypixel
-     * @deprecated This method is not reliable. The recentGames endpoint should be used instead
+     * @deprecated This method is not reliable. The <code>status</code> endpoint should be used
+     * instead
      */
     @Deprecated
     public boolean isOnline() {
