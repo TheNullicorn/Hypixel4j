@@ -142,6 +142,24 @@ public class HypixelPlayer extends ComplexHypixelObject {
     }
 
     /**
+     * @return Whether or not this player has hidden their session status in the API; if false, the
+     * <code>status</code> endpoint will always return null for this player, even if they are
+     * online
+     */
+    public boolean isSessionVisible() {
+        return getBool("settings.apiSession", true);
+    }
+
+    /**
+     * @return Whether or not this player has hidden their recent games in the API; if false, the
+     * <code>recentGames</code> endpoint will always return an empty array for this player, even if
+     * they have played any minigames recently
+     */
+    public boolean areRecentGamesVisible() {
+        return getBool("settings.apiRecentGames", true);
+    }
+
+    /**
      * @return Whether or not this player has a rank; prefixes do not count (as they are only
      * cosmetic)
      */
