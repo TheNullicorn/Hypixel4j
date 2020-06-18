@@ -43,7 +43,7 @@ public class HypixelPlayer extends ComplexHypixelObject {
      * @return This player's display name
      */
     public String getName() {
-        return getStr("displayname", "Unknown");
+        return getStringProperty("displayname", "Unknown");
     }
 
     /**
@@ -51,7 +51,7 @@ public class HypixelPlayer extends ComplexHypixelObject {
      */
     public UUID getUuid() {
         if (hasProperty("uuid")) {
-            return UuidUtil.fromUndashed(getStr("uuid"));
+            return UuidUtil.fromUndashed(getStringProperty("uuid", null));
         } else {
             return null;
         }
@@ -61,8 +61,8 @@ public class HypixelPlayer extends ComplexHypixelObject {
      * @return This player's total network experience points
      */
     public long getExperience() {
-        long experience = getLong("networkExp");
-        experience += getTotalExpToExactLevel(getLong("networkLevel", 0) + 1);
+        long experience = getLongProperty("networkExp", 0);
+        experience += getTotalExpToExactLevel(getLongProperty("networkLevel", 0) + 1);
         return experience;
     }
 
@@ -78,7 +78,7 @@ public class HypixelPlayer extends ComplexHypixelObject {
      * @return This player's total karma count
      */
     public long getKarma() {
-        return getLong("karma");
+        return getLongProperty("karma", 0);
     }
 
     /**
@@ -86,7 +86,7 @@ public class HypixelPlayer extends ComplexHypixelObject {
      */
     public Date getFirstLogin() {
         if (hasProperty("firstLogin")) {
-            return new Date(getLong("firstLogin"));
+            return new Date(getLongProperty("firstLogin", 0));
         }
         return null;
     }
@@ -96,7 +96,7 @@ public class HypixelPlayer extends ComplexHypixelObject {
      */
     public Date getLastLogin() {
         if (hasProperty("lastLogin")) {
-            return new Date(getLong("lastLogin"));
+            return new Date(getLongProperty("lastLogin", 0));
         }
         return null;
     }
@@ -106,7 +106,7 @@ public class HypixelPlayer extends ComplexHypixelObject {
      */
     public Date getLastLogout() {
         if (hasProperty("lastLogout")) {
-            return new Date(getLong("lastLogout"));
+            return new Date(getLongProperty("lastLogout", 0));
         }
         return null;
     }
@@ -117,7 +117,7 @@ public class HypixelPlayer extends ComplexHypixelObject {
      */
     public GameType getMostRecentGameType() {
         if (hasProperty("mostRecentGameType")) {
-            return GameType.fromTypeName(getStr("mostRecentGameType"));
+            return GameType.fromTypeName(getStringProperty("mostRecentGameType", null));
         } else {
             return GameType.UNKNOWN;
         }
@@ -128,7 +128,7 @@ public class HypixelPlayer extends ComplexHypixelObject {
      * is unknown
      */
     public String getLastKnownMinecraftVersion() {
-        return getStr("mcVersionRp", null);
+        return getStringProperty("mcVersionRp", null);
     }
 
     /**
@@ -138,7 +138,7 @@ public class HypixelPlayer extends ComplexHypixelObject {
      */
     @Deprecated
     public boolean isOnline() {
-        return getLong("lastLogin") > getLong("lastLogout");
+        return getLongProperty("lastLogin", 0) > getLongProperty("lastLogout", 0);
     }
 
     /**
@@ -147,7 +147,7 @@ public class HypixelPlayer extends ComplexHypixelObject {
      * online
      */
     public boolean isSessionVisible() {
-        return getBool("settings.apiSession", true);
+        return getBoolProperty("settings.apiSession", true);
     }
 
     /**
@@ -156,7 +156,7 @@ public class HypixelPlayer extends ComplexHypixelObject {
      * they have played any minigames recently
      */
     public boolean areRecentGamesVisible() {
-        return getBool("settings.apiRecentGames", true);
+        return getBoolProperty("settings.apiRecentGames", true);
     }
 
     /**
@@ -171,7 +171,7 @@ public class HypixelPlayer extends ComplexHypixelObject {
      * @return Whether or not this player is on the Hypixel Build Team
      */
     public boolean isOnBuildTeam() {
-        return getBool("buildTeam") || getBool("buildTeamAdmin");
+        return getBoolProperty("buildTeam", false) || getBoolProperty("buildTeamAdmin", false);
     }
 
     /**
@@ -179,16 +179,16 @@ public class HypixelPlayer extends ComplexHypixelObject {
      */
     public HypixelRank getHighestRank() {
         if (hasRankInField("rank")) {
-            return HypixelRank.from(getStr("rank"));
+            return HypixelRank.from(getStringProperty("rank", null));
 
         } else if (hasRankInField("monthlyPackageRank")) {
-            return HypixelRank.from(getStr("monthlyPackageRank"));
+            return HypixelRank.from(getStringProperty("monthlyPackageRank", null));
 
         } else if (hasRankInField("newPackageRank")) {
-            return HypixelRank.from(getStr("newPackageRank"));
+            return HypixelRank.from(getStringProperty("newPackageRank", null));
 
         } else if (hasRankInField("packageRank")) {
-            return HypixelRank.from(getStr("packageRank"));
+            return HypixelRank.from(getStringProperty("packageRank", null));
         }
 
         return HypixelRank.DEFAULT;
@@ -199,15 +199,15 @@ public class HypixelPlayer extends ComplexHypixelObject {
      * @see <a href=https://minecraft.gamepedia.com/Formatting_codes>Formatting Codes</a>
      */
     public String getRankPrefix() {
-        String prefix = getStr("prefix", null);
+        String prefix = getStringProperty("prefix", null);
         if (prefix != null && !prefix.isEmpty()) {
             return prefix;
         }
 
         return getHighestRank().getPrefix(
-            FormatCode.fromName(getStr("monthlyRankColor", "GOLD")),
+            FormatCode.fromName(getStringProperty("monthlyRankColor", "GOLD")),
             // Default MVP++ tag color is gold
-            FormatCode.fromName(getStr("rankPlusColor", "RED"))
+            FormatCode.fromName(getStringProperty("rankPlusColor", "RED"))
             // Default MVP+/MVP++ plus color is light red
         );
     }
@@ -219,7 +219,7 @@ public class HypixelPlayer extends ComplexHypixelObject {
      * @return Whether or not the specified field contains an active rank value
      */
     private boolean hasRankInField(String name) {
-        String value = getStr(name, "NONE");
+        String value = getStringProperty(name, "NONE");
         return !value.isEmpty() && !value.equals("NONE") && !value.equals("NORMAL");
     }
 

@@ -1,5 +1,6 @@
 package me.nullicorn.hypixel4j.data;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -11,82 +12,66 @@ public interface WrappedJsonObject {
     JsonObject getRaw();
 
     /**
-     * @return The boolean value of the property, or false if it does not exist
+     * @param def Default value
      * @see #getProperty(String)
      */
-    boolean getBool(String name);
+    double getDoubleProperty(String key, double def);
 
     /**
      * @param def Default value
      * @see #getProperty(String)
      */
-    boolean getBool(String name, boolean def);
-
-    // Integer properties
-
-    /**
-     * @return The long integer value of the property, or 0 if it does not exist
-     * @see #getProperty(String)
-     */
-    long getLong(String name);
+    float getFloatProperty(String key, float def);
 
     /**
      * @param def Default value
      * @see #getProperty(String)
      */
-    long getLong(String name, long def);
-
-    // Long integer properties
-
-    /**
-     * @return The integer value of the property, or 0 if it does not exist
-     * @see #getProperty(String)
-     */
-    long getInt(String name);
+    long getLongProperty(String key, long def);
 
     /**
      * @param def Default value
      * @see #getProperty(String)
      */
-    long getInt(String name, int def);
-
-    // Floating-point properties
+    int getIntProperty(String key, int def);
 
     /**
-     * @return The float value of the property, or 0.0D if it does not exist
+     * @param def Defaut value
      * @see #getProperty(String)
      */
-    double getFloat(String name);
+    Number getNumberProperty(String key, Number def);
 
     /**
      * @param def Default value
      * @see #getProperty(String)
      */
-    double getFloat(String name, double def);
-
-    // String properties
-
-    /**
-     * @return The string value of the property, or an empty string if it does not exist
-     * @see #getProperty(String)
-     */
-    String getStr(String name);
+    String getStringProperty(String key, String def);
 
     /**
      * @param def Default value
      * @see #getProperty(String)
      */
-    String getStr(String name, String def);
+    boolean getBoolProperty(String key, boolean def);
 
     /**
-     * @param name Dot-notation path to the property
-     * @return Whether or not the property exists
+     * @see #getProperty(String)
      */
-    boolean hasProperty(String name);
+    JsonArray getArrayProperty(String key);
 
     /**
-     * @param name Dot-notation path to the property
+     * @see #getProperty(String)
+     */
+    JsonObject getObjectProperty(String key);
+
+    /**
+     * @param key Dot-notation path to the property
      * @return The value of the property, or null if it does not exist
      */
-    JsonElement getProperty(String name);
+    JsonElement getProperty(String key);
+
+    /**
+     * @param key Dot-notation path to the property
+     * @return Whether or not the property exists
+     */
+    boolean hasProperty(String key);
 }

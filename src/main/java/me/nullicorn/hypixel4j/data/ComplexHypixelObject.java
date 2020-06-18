@@ -1,6 +1,8 @@
 package me.nullicorn.hypixel4j.data;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import me.nullicorn.hypixel4j.util.GsonUtil;
 
 /**
@@ -8,119 +10,67 @@ import me.nullicorn.hypixel4j.util.GsonUtil;
  */
 public abstract class ComplexHypixelObject implements WrappedJsonObject, HypixelObject {
 
-    /**
-     * @return The boolean value of the property, or false if it does not exist
-     * @see #getProperty(String)
-     */
     @Override
-    public boolean getBool(String name) {
-        return GsonUtil.getBool(name, getRaw());
+    public double getDoubleProperty(String key, double def) {
+        return GsonUtil.getFloat(key, def, getRaw());
     }
 
-    /**
-     * @param def Default value
-     * @see #getProperty(String)
-     */
     @Override
-    public boolean getBool(String name, boolean def) {
-        return GsonUtil.getBool(name, def, getRaw());
+    public float getFloatProperty(String key, float def) {
+        return GsonUtil.getNumber(key, def, getRaw()).floatValue();
     }
 
-    // Long integer properties
-
-    /**
-     * @return The long integer value of the property, or 0 if it does not exist
-     * @see #getProperty(String)
-     */
     @Override
-    public long getLong(String name) {
-        return GsonUtil.getLong(name, getRaw());
+    public long getLongProperty(String key, long def) {
+        return GsonUtil.getLong(key, def, getRaw());
     }
 
-    /**
-     * @param def Default value
-     * @see #getProperty(String)
-     */
     @Override
-    public long getLong(String name, long def) {
-        return GsonUtil.getLong(name, def, getRaw());
+    public int getIntProperty(String key, int def) {
+        return GsonUtil.getInt(key, def, getRaw());
     }
 
-    // Integer properties
-
-    /**
-     * @return The integer value of the property, or 0 if it does not exist
-     * @see #getProperty(String)
-     */
     @Override
-    public long getInt(String name) {
-        return GsonUtil.getInt(name, getRaw());
+    public Number getNumberProperty(String key, Number def) {
+        return GsonUtil.getNumber(key, def, getRaw());
     }
 
-    /**
-     * @param def Default value
-     * @see #getProperty(String)
-     */
     @Override
-    public long getInt(String name, int def) {
-        return GsonUtil.getInt(name, def, getRaw());
+    public String getStringProperty(String key, String def) {
+        return GsonUtil.getString(key, def, getRaw());
     }
 
-    // Floating-point properties
-
-    /**
-     * @return The float value of the property, or 0.0D if it does not exist
-     * @see #getProperty(String)
-     */
     @Override
-    public double getFloat(String name) {
-        return GsonUtil.getFloat(name, getRaw());
+    public boolean getBoolProperty(String key, boolean def) {
+        return GsonUtil.getBool(key, def, getRaw());
     }
 
-    /**
-     * @param def Default value
-     * @see #getProperty(String)
-     */
     @Override
-    public double getFloat(String name, double def) {
-        return GsonUtil.getFloat(name, def, getRaw());
+    public JsonArray getArrayProperty(String key) {
+        JsonElement element = GsonUtil.get(getRaw(), key);
+        if (element != null && element.isJsonArray()) {
+            return element.getAsJsonArray();
+        }
+        return null;
     }
 
-    // String properties
-
-    /**
-     * @return The string value of the property, or an empty string if it does not exist
-     * @see #getProperty(String)
-     */
     @Override
-    public String getStr(String name) {
-        return GsonUtil.getString(name, getRaw());
+    public JsonObject getObjectProperty(String key) {
+        JsonElement element = GsonUtil.get(getRaw(), key);
+        if (element != null && element.isJsonObject()) {
+            return element.getAsJsonObject();
+        }
+        return null;
     }
 
-    /**
-     * @param def Default value
-     * @see #getProperty(String)
-     */
     @Override
-    public String getStr(String name, String def) {
-        return GsonUtil.getString(name, def, getRaw());
+    public JsonElement getProperty(String key) {
+        return GsonUtil.get(getRaw(), key);
     }
 
-    /**
-     * @param name Dot-notation path to the property
-     * @return Whether or not the property exists
-     */
     @Override
-    public boolean hasProperty(String name) {
-        return getProperty(name) != null;
-    }
-
-    /**
-     * @param name Dot-notation path to the property
-     * @return The value of the property, or null if it does not exist
-     */
-    @Override
-    public JsonElement getProperty(String name) {
-        return GsonUtil.get(getRaw(), name);
+    public boolean hasProperty(String key) {
+        JsonElement property = getProperty(key);
+        return property != null && !property.isJsonNull();
     }
 }
