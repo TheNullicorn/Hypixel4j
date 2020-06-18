@@ -3,7 +3,6 @@ package me.nullicorn.hypixel4j.response.guild;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import lombok.Getter;
 import me.nullicorn.hypixel4j.data.HypixelObject;
 import me.nullicorn.hypixel4j.util.FormatCode;
@@ -19,51 +18,50 @@ public class HypixelGuild implements HypixelObject {
 
     @Getter
     @SerializedName("_id")
-    private String id;
+    protected String id;
 
     @Getter
-    private String name;
+    protected String name;
 
-    private String     tag;
-    private FormatCode tagColor;
-
-    @Getter
-    private String description;
+    protected String     tag;
+    protected FormatCode tagColor;
 
     @Getter
-    private List<GameType> preferredGames;
+    protected String description;
 
     @Getter
-    private List<Member> members;
+    protected List<GameType> preferredGames;
 
     @Getter
-    private List<Rank> ranks;
+    protected List<HypixelGuildMember> members;
+
+    protected List<HypixelGuildRank> ranks;
 
     @Getter
     @SerializedName("exp")
-    private long experience;
+    protected long experience;
 
     @Getter
     @SerializedName("created")
-    private Date createdAt;
+    protected Date createdAt;
 
     // Privacy settings
     @Getter
-    private boolean joinable;
+    protected boolean joinable;
 
     @Getter
-    private boolean publiclyListed;
+    protected boolean publiclyListed;
 
     // Discontinued
     @Getter
-    private long coins;
+    protected long coins;
 
     @Getter
-    private long coinsEver;
+    protected long coinsEver;
 
     @Getter
     @SerializedName("legacyRanking")
-    private long oldRank;
+    protected long oldGuildRanking;
 
     /**
      * @return Whether or not this guild exists
@@ -73,54 +71,34 @@ public class HypixelGuild implements HypixelObject {
     }
 
     /**
-     * Represents a member of a Hypixel guild
+     * @return A list of ranks that can be held by this guild's members. If this guild has no ranks,
+     * a list of pre-guild-update ranks are used
      */
-    public class Member {
-
-        @Getter
-        private UUID uuid;
-
-        @SerializedName("rank")
-        private String guildRank;
-
-        @Getter
-        @SerializedName("joined")
-        private Date joinDate;
-
-        @Getter
-        private int questParticipation;
-
-        /**
-         * @return This member's guild rank, or null if it could not be determined
-         */
-        public Rank getGuildRank() {
-            if (ranks == null) {
-                return null;
-            }
-
-            for (Rank rank : ranks) {
-                if (rank.name.equalsIgnoreCase(this.guildRank)) {
-                    return rank;
-                }
-            }
-
-            return null;
+    public List<HypixelGuildRank> getRanks() {
+        if (ranks == null || ranks.isEmpty()) {
+            return HypixelGuildRank.defaultRankList;
         }
+        return ranks;
     }
 
-    /**
-     * Represents a guild rank within a Hypixel guild
-     */
-    @Getter
-    public class Rank {
-
-        private String  name;
-        @SerializedName("tag")
-        private String  chatTag;
-        @SerializedName("boolean")
-        private boolean isDefaultRank;
-        private int     priority;
-        @SerializedName("created")
-        private Date    creationDate;
+    @Override
+    public String toString() {
+        return "HypixelGuild{" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", tag='" + tag + '\'' +
+            ", tagColor=" + tagColor +
+            ", description='" + description + '\'' +
+            ", preferredGames=" + preferredGames +
+            ", members=" + members +
+            ", ranks=" + ranks +
+            ", experience=" + experience +
+            ", createdAt=" + createdAt +
+            ", joinable=" + joinable +
+            ", publiclyListed=" + publiclyListed +
+            ", coins=" + coins +
+            ", coinsEver=" + coinsEver +
+            ", oldGuildRanking=" + oldGuildRanking +
+            '}';
     }
 }
