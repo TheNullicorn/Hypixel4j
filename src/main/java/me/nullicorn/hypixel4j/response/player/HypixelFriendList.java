@@ -35,7 +35,10 @@ public class HypixelFriendList implements HypixelObject {
             '}';
     }
 
-    public class Friendship implements HypixelObject {
+    public static class Friendship implements HypixelObject {
+
+        @Setter
+        private HypixelFriendList friendList;
 
         @Getter
         @SerializedName("_id")
@@ -65,7 +68,7 @@ public class HypixelFriendList implements HypixelObject {
          * list
          */
         public boolean wasOutgoing() {
-            return senderUuid == HypixelFriendList.this.owner;
+            return senderUuid.equals(friendList.owner);
         }
 
         @Override

@@ -17,6 +17,12 @@ public final class APITestConstants {
         = UUID.fromString("8614fb2d-e71d-4675-95dc-d7da3d977eae");
 
     /**
+     * Minecraft UUID of the "hypixel" account
+     */
+    public static final UUID HYPIXEL_UUID
+        = UUID.fromString("f7c77d99-9f15-4a66-a87d-c4a51ef30d19");
+
+    /**
      * Random UUID not associated with any known player in the Hypixel API
      */
     public static final UUID NULL_PLAYER_UUID

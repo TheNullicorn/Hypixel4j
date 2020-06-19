@@ -20,16 +20,18 @@ public class HypixelFriendListTypeAdapter implements
     @Override
     public HypixelFriendList deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
 
+        HypixelFriendList friendList = new HypixelFriendList();
         List<Friendship> friendships = new ArrayList<>();
 
         if (json != null && json.isJsonArray()) {
 
             // Deserialize each friendship record
-            json.getAsJsonArray().forEach(friendShipJson ->
-                friendships.add(context.deserialize(friendShipJson, Friendship.class)));
+            json.getAsJsonArray().forEach(friendShipJson -> {
+                Friendship friendship = context.deserialize(friendShipJson, Friendship.class);
+                friendship.setFriendList(friendList);
+                friendships.add(friendship);
+            });
         }
-
-        HypixelFriendList friendList = new HypixelFriendList();
         try {
             // Attempt to set the friend list using reflection
             Field friendshipsField = friendList.getClass().getDeclaredField("friendships");

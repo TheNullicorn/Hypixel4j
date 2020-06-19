@@ -40,16 +40,16 @@ class HypixelAPITest {
 
     @Test
     void test_fetchPlayer_Sync() throws ApiException {
-        HypixelPlayer player = api.getPlayer(APITestConstants.SAMPLE_PLAYER_UUID);
+        HypixelPlayer player = api.getPlayer(APITestConstants.HYPIXEL_UUID);
         Assertions.assertTrue(player.exists());
-        Assertions.assertEquals(APITestConstants.SAMPLE_PLAYER_UUID, player.getUuid());
+        Assertions.assertEquals(APITestConstants.HYPIXEL_UUID, player.getUuid());
     }
 
     @Test
     void test_fetchPlayer_Async() throws InterruptedException, TimeoutException {
         final Waiter waiter = new Waiter();
 
-        api.getPlayerAsync(APITestConstants.SAMPLE_PLAYER_UUID).whenComplete((player, error) -> {
+        api.getPlayerAsync(APITestConstants.HYPIXEL_UUID).whenComplete((player, error) -> {
             if (error != null) {
                 waiter.fail(error);
                 return;
@@ -57,7 +57,7 @@ class HypixelAPITest {
 
             try {
                 Assertions.assertTrue(player.exists());
-                Assertions.assertEquals(APITestConstants.SAMPLE_PLAYER_UUID, player.getUuid());
+                Assertions.assertEquals(APITestConstants.HYPIXEL_UUID, player.getUuid());
                 waiter.resume();
             } catch (Throwable t) {
                 waiter.fail(t);
@@ -90,7 +90,15 @@ class HypixelAPITest {
 
     @Test
     void test_fetchFriendList_Sync() throws ApiException {
-        HypixelFriendList friendList = api.getPlayerFriendList(APITestConstants.SAMPLE_PLAYER_UUID);
-        System.out.println(friendList);
+        HypixelFriendList friendList = api.getPlayerFriendList(APITestConstants.HYPIXEL_UUID);
+        Assertions.assertEquals(APITestConstants.HYPIXEL_UUID, friendList.getOwner());
+        Assertions.assertTrue(friendList.getSize() > 0);
+
+        System.out.println("Player '" + friendList.getOwner() + "' has "
+            + friendList.getSize() + " friends:");
+        friendList.getFriendships().forEach(friendship -> {
+            System.out.print(friendship.wasOutgoing() ? "Sent:     " : "Received: ");
+            System.out.println(friendship.getOtherPlayerUuid());
+        });
     }
 }
