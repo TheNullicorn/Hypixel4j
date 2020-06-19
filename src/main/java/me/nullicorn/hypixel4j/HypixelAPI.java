@@ -11,6 +11,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import me.nullicorn.hypixel4j.adapter.HypixelFriendListTypeAdapter;
 import me.nullicorn.hypixel4j.adapter.HypixelPlayerTypeAdapter;
 import me.nullicorn.hypixel4j.adapter.TrimmedUUIDTypeAdapter;
 import me.nullicorn.hypixel4j.adapter.UnixTimestampTypeAdapter;
@@ -20,6 +21,8 @@ import me.nullicorn.hypixel4j.exception.KeyThrottleException;
 import me.nullicorn.hypixel4j.response.APIResponse;
 import me.nullicorn.hypixel4j.response.guild.GuildResponse;
 import me.nullicorn.hypixel4j.response.guild.HypixelGuild;
+import me.nullicorn.hypixel4j.response.player.FriendshipsResponse;
+import me.nullicorn.hypixel4j.response.player.HypixelFriendList;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
 import me.nullicorn.hypixel4j.response.player.PlayerResponse;
 import me.nullicorn.hypixel4j.util.UuidUtil;
@@ -41,6 +44,7 @@ public class HypixelAPI {
         .registerTypeAdapter(Date.class, new UnixTimestampTypeAdapter())
         .registerTypeAdapter(UUID.class, new TrimmedUUIDTypeAdapter())
         .registerTypeAdapter(HypixelPlayer.class, new HypixelPlayerTypeAdapter())
+        .registerTypeAdapter(HypixelFriendList.class, new HypixelFriendListTypeAdapter())
         .setPrettyPrinting()
         .create();
 
@@ -146,6 +150,16 @@ public class HypixelAPI {
     public HypixelGuild getGuildByPlayer(UUID memberUuid) throws ApiException {
         return fetch(GuildResponse.class, "guild",
             Collections.singletonMap("player", UuidUtil.undash(memberUuid)));
+    }
+
+    public HypixelFriendList getPlayerFriendList(UUID playerUuid) throws ApiException {
+        HypixelFriendList friendList = fetch(FriendshipsResponse.class, "friends",
+            Collections.singletonMap("uuid", UuidUtil.undash(playerUuid)));
+
+        if (friendList != null) {
+            friendList.setOwner(playerUuid);
+        }
+        return friendList;
     }
 
     protected <T extends HypixelObject> CompletableFuture<T> fetchAsync(Class<? extends APIResponse<T>> type, String endpoint, Map<String, Object> params) {

@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import me.nullicorn.hypixel4j.exception.ApiException;
 import me.nullicorn.hypixel4j.response.guild.HypixelGuild;
+import me.nullicorn.hypixel4j.response.player.HypixelFriendList;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
 import net.jodah.concurrentunit.Waiter;
 import org.junit.jupiter.api.Assertions;
@@ -81,5 +82,15 @@ class HypixelAPITest {
         HypixelGuild guild = api.getGuildById(APITestConstants.SAMPLE_GUILD_ID);
         Assertions.assertTrue(guild.exists());
         Assertions.assertEquals(APITestConstants.SAMPLE_GUILD_ID, guild.getId());
+    }
+
+    /*
+    Fetch Friend List
+     */
+
+    @Test
+    void test_fetchFriendList_Sync() throws ApiException {
+        HypixelFriendList friendList = api.getPlayerFriendList(APITestConstants.SAMPLE_PLAYER_UUID);
+        System.out.println(friendList);
     }
 }
