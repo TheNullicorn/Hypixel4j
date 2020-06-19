@@ -152,6 +152,14 @@ public class HypixelAPI {
             Collections.singletonMap("player", UuidUtil.undash(memberUuid)));
     }
 
+    /**
+     * Get a player's friend list from the Hypixel API
+     *
+     * @param playerUuid Minecraft UUID of a player
+     * @return The Hypixel friend list of the desired player
+     * @throws ApiException If the request could not be made, or if the Hypixel API returned an
+     *                      error
+     */
     public HypixelFriendList getPlayerFriendList(UUID playerUuid) throws ApiException {
         HypixelFriendList friendList = fetch(FriendshipsResponse.class, "friends",
             Collections.singletonMap("uuid", UuidUtil.undash(playerUuid)));
