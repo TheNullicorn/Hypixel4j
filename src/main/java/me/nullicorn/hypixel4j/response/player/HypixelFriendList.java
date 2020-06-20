@@ -9,14 +9,22 @@ import lombok.Setter;
 import me.nullicorn.hypixel4j.data.HypixelObject;
 
 /**
- * Created by Ben on 6/18/20 @ 5:56 PM
+ * Represents a Hypixel player's friend list
  */
 public class HypixelFriendList implements HypixelObject {
 
+    /**
+     * The UUID of the player whose friendships are stored in this class
+     *
+     * @see #friendships
+     */
     @Getter
     @Setter
     protected UUID ownerUuid;
 
+    /**
+     * A list of friendships between the owner of this friend list and other players
+     */
     @Getter
     @Setter
     protected List<Friendship> friendships;
@@ -36,21 +44,40 @@ public class HypixelFriendList implements HypixelObject {
             '}';
     }
 
+    /**
+     * Represents a friendship between two players on Hypixel
+     */
     public static class Friendship implements HypixelObject {
 
+        /**
+         * The friend list containing this frienship instance
+         */
         @Setter
         private HypixelFriendList friendList;
 
+        /**
+         * The internal ID of this Hypixel friendship
+         */
         @Getter
         @SerializedName("_id")
         protected String id;
 
+        /**
+         * The player responsible for creating this friendship
+         */
         @SerializedName("uuidSender")
         protected UUID senderUuid;
 
+        /**
+         * The player who the original friend request was sent to
+         */
         @SerializedName("uuidReceiver")
         protected UUID receiverUuid;
 
+        /**
+         * The date at which this friendship was started; if these two players have been friends
+         * before, this is the most recent date at which a friend request was accepted between them
+         */
         @Getter
         @SerializedName("started")
         protected Date startDate;
