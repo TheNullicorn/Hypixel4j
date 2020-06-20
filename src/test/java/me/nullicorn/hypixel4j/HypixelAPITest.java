@@ -7,6 +7,7 @@ import me.nullicorn.hypixel4j.exception.ApiException;
 import me.nullicorn.hypixel4j.response.guild.HypixelGuild;
 import me.nullicorn.hypixel4j.response.player.HypixelFriendList;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
+import me.nullicorn.hypixel4j.response.player.HypixelPlayerSession;
 import net.jodah.concurrentunit.Waiter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -100,5 +101,15 @@ class HypixelAPITest {
             System.out.print(friendship.wasOutgoing() ? "Sent:     " : "Received: ");
             System.out.println(friendship.getOtherPlayerUuid());
         });
+    }
+
+    /*
+    Fetch Session Status
+     */
+
+    @Test
+    void test_fetchPlayerSessionStatus_Sync() throws ApiException {
+        HypixelPlayerSession session = api.getPlayerSession(APITestConstants.SAMPLE_PLAYER_UUID);
+        System.out.println(session);
     }
 }

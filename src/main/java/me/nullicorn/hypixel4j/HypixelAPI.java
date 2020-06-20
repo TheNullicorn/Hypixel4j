@@ -24,7 +24,9 @@ import me.nullicorn.hypixel4j.response.guild.HypixelGuild;
 import me.nullicorn.hypixel4j.response.player.FriendshipsResponse;
 import me.nullicorn.hypixel4j.response.player.HypixelFriendList;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
+import me.nullicorn.hypixel4j.response.player.HypixelPlayerSession;
 import me.nullicorn.hypixel4j.response.player.PlayerResponse;
+import me.nullicorn.hypixel4j.response.player.SessionStatusResponse;
 import me.nullicorn.hypixel4j.util.UuidUtil;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -168,6 +170,11 @@ public class HypixelAPI {
             friendList.setOwnerUuid(playerUuid);
         }
         return friendList;
+    }
+
+    public HypixelPlayerSession getPlayerSession(UUID playerUuid) throws ApiException {
+        return fetch(SessionStatusResponse.class, "status",
+            Collections.singletonMap("uuid", UuidUtil.undash(playerUuid)));
     }
 
     protected <T extends HypixelObject> CompletableFuture<T> fetchAsync(Class<? extends APIResponse<T>> type, String endpoint, Map<String, Object> params) {
