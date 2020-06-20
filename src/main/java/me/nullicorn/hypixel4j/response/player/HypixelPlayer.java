@@ -12,14 +12,21 @@ import me.nullicorn.hypixel4j.util.GameType;
 import me.nullicorn.hypixel4j.util.UuidUtil;
 
 /**
- * Created by Ben on 6/8/20 @ 7:25 PM
+ * Represents a Hypixel player
  */
 public class HypixelPlayer extends ComplexHypixelObject {
 
+    /**
+     * @param data The raw player JsonObject returned from the Hypixel API
+     */
     public HypixelPlayer(JsonObject data) {
         this.raw = data;
     }
 
+    /**
+     * The raw JsonObject that represents this Hypixel player; the object in the "player" field of
+     * the API's player endpoint
+     */
     @SerializedName("player")
     private final JsonElement raw;
 

@@ -9,8 +9,15 @@ import me.nullicorn.hypixel4j.response.APIResponse;
  */
 public class PlayerResponse extends APIResponse<HypixelPlayer> {
 
+    /**
+     * A blank player object to be returned by {@link #getPayload()} when the {@link #player} is
+     * null
+     */
     private static final HypixelPlayer EMPTY_PLAYER = new HypixelPlayer(null);
 
+    /**
+     * The player object returned by the API
+     */
     protected HypixelPlayer player;
 
     /**

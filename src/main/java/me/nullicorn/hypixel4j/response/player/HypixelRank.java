@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 import me.nullicorn.hypixel4j.util.FormatCode;
 
 /**
- * Created by Ben on 6/8/20 @ 8:59 PM
+ * All Hypixel ranks that are attached to a permission level
+ * <p>
+ * This does not include prefixes, which are only cosmetic
  */
 public enum HypixelRank {
 
