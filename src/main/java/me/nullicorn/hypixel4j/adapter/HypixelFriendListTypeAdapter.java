@@ -3,7 +3,6 @@ package me.nullicorn.hypixel4j.adapter;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
-import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +31,8 @@ public class HypixelFriendListTypeAdapter implements
                 friendships.add(friendship);
             });
         }
-        try {
-            // Attempt to set the friend list using reflection
-            Field friendshipsField = friendList.getClass().getDeclaredField("friendships");
-            friendshipsField.setAccessible(true);
-            friendshipsField.set(friendList, friendships);
 
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
+        friendList.setFriendships(friendships);
         return friendList;
     }
 }

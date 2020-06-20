@@ -15,13 +15,14 @@ public class HypixelFriendList implements HypixelObject {
 
     @Getter
     @Setter
-    protected UUID owner;
+    protected UUID ownerUuid;
 
     @Getter
+    @Setter
     protected List<Friendship> friendships;
 
     /**
-     * @return The number of friends {@link #owner} has
+     * @return The number of friends {@link #ownerUuid} has
      */
     public int getSize() {
         return friendships.size();
@@ -30,7 +31,7 @@ public class HypixelFriendList implements HypixelObject {
     @Override
     public String toString() {
         return "HypixelFriendList{" +
-            "owner=" + owner +
+            "ownerUuid=" + ownerUuid +
             ", friendships=" + friendships +
             '}';
     }
@@ -68,7 +69,7 @@ public class HypixelFriendList implements HypixelObject {
          * list
          */
         public boolean wasOutgoing() {
-            return senderUuid.equals(friendList.owner);
+            return senderUuid.equals(friendList.ownerUuid);
         }
 
         @Override

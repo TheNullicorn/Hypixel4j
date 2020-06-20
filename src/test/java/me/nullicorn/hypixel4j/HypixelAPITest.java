@@ -91,10 +91,10 @@ class HypixelAPITest {
     @Test
     void test_fetchFriendList_Sync() throws ApiException {
         HypixelFriendList friendList = api.getPlayerFriendList(APITestConstants.HYPIXEL_UUID);
-        Assertions.assertEquals(APITestConstants.HYPIXEL_UUID, friendList.getOwner());
+        Assertions.assertEquals(APITestConstants.HYPIXEL_UUID, friendList.getOwnerUuid());
         Assertions.assertTrue(friendList.getSize() > 0);
 
-        System.out.println("Player '" + friendList.getOwner() + "' has "
+        System.out.println("Player '" + friendList.getOwnerUuid() + "' has "
             + friendList.getSize() + " friends:");
         friendList.getFriendships().forEach(friendship -> {
             System.out.print(friendship.wasOutgoing() ? "Sent:     " : "Received: ");

@@ -165,7 +165,7 @@ public class HypixelAPI {
             Collections.singletonMap("uuid", UuidUtil.undash(playerUuid)));
 
         if (friendList != null) {
-            friendList.setOwner(playerUuid);
+            friendList.setOwnerUuid(playerUuid);
         }
         return friendList;
     }
