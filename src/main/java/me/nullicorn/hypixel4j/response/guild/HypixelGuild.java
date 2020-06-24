@@ -16,16 +16,28 @@ public class HypixelGuild implements HypixelObject {
     protected HypixelGuild() {
     }
 
+    /**
+     * The internal ID of this Hypixel guild; a valid <a href=https://docs.mongodb.com/manual/reference/bson-types/#objectid>BSON
+     * ObjectId</a>
+     */
     @Getter
     @SerializedName("_id")
     protected String id;
 
+    /**
+     * The guild's name; an alphanumeric string between 1 and 32 (both inclusive) characters long
+     */
     @Getter
     protected String name;
 
     protected String     tag;
     protected FormatCode tagColor;
 
+    /**
+     * The public description for this guild. This appears to be able to contain any characters that
+     * can be typed in Minecraft and can be up to 232 charachters long (256 total characters for a
+     * Minecraft command, minus 24 for "/g settings description ")
+     */
     @Getter
     protected String description;
 
