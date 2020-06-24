@@ -10,7 +10,7 @@ import me.nullicorn.hypixel4j.response.player.HypixelFriendList;
 import me.nullicorn.hypixel4j.response.player.HypixelFriendList.Friendship;
 
 /**
- * Created by Ben on 6/18/20 @ 6:21 PM
+ * Json deserializer for Hypixel friend list objects returned from the Hypixel API
  */
 public class HypixelFriendListTypeAdapter implements
     JsonDeserializer<HypixelFriendList> {

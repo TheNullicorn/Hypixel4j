@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 
 /**
- * Created by Ben on 6/9/20 @ 7:14 AM
+ * Major games available on the Hypixel Network. This is not a complete list (leaving out
+ * "TOURNAMENT" for example), but is a replica of the one found in the official documentation
  */
 @Getter
 public enum GameType {

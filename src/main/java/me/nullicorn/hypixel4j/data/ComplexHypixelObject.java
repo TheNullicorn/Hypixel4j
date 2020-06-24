@@ -6,7 +6,8 @@ import com.google.gson.JsonObject;
 import me.nullicorn.hypixel4j.util.GsonUtil;
 
 /**
- * Created by Ben on 6/9/20 @ 6:31 AM
+ * Represents an object returned from the Hypixel API that is too dynamic to define a structure for,
+ * most notably the player object
  */
 public abstract class ComplexHypixelObject implements WrappedJsonObject, HypixelObject {
 

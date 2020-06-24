@@ -1,7 +1,7 @@
 package me.nullicorn.hypixel4j.util;
 
 /**
- * Created by Ben on 6/9/20 @ 10:13 AM
+ * Various utilities related to Minecraft formatting codes and formatted text
  */
 public class ColorUtil {
 

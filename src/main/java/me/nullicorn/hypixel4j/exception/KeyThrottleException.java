@@ -1,7 +1,8 @@
 package me.nullicorn.hypixel4j.exception;
 
 /**
- * Created by Ben on 6/8/20 @ 6:29 PM
+ * Thrown when a Hypixel API key has been throttled for sending too many requests in a short amount
+ * of time (surpassing its rate-limit)
  */
 public class KeyThrottleException extends ApiException {
 

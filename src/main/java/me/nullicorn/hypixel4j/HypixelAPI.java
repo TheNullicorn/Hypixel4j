@@ -38,7 +38,7 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 
 /**
- * Created by Ben on 6/8/20 @ 5:47 PM
+ * Used for interfacing with the Hypixel API using a single API key
  */
 public class HypixelAPI {
 

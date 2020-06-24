@@ -3,9 +3,6 @@ package me.nullicorn.hypixel4j.util;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-/**
- * Created by Ben on 6/9/20 @ 10:16 AM
- */
 class ColorUtilTest {
 
     /**

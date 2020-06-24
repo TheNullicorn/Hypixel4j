@@ -13,9 +13,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-/**
- * Created by Ben on 6/8/20 @ 7:02 PM
- */
 class HypixelAPITest {
 
     /**

@@ -1,7 +1,8 @@
 package me.nullicorn.hypixel4j.exception;
 
 /**
- * Created by Ben on 6/8/20 @ 6:29 PM
+ * Represents an error that occurred when making a request to the Hypixel API or processing the
+ * response
  */
 public class ApiException extends Exception {
 

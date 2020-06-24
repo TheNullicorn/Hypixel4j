@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
- * Created by Ben on 6/8/20 @ 7:26 PM
+ * Various utilities to make working with Gson's JsonObjects simpler
  */
 public class GsonUtil {
 

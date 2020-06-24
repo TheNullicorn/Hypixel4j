@@ -3,7 +3,7 @@ package me.nullicorn.hypixel4j.util;
 import java.util.UUID;
 
 /**
- * Created by Ben on 6/9/20 @ 9:03 AM
+ * Various utilities for converting to and from trimmed UUIDs
  */
 public class UuidUtil {
 

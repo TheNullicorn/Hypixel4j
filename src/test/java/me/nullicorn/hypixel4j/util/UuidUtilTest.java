@@ -4,9 +4,6 @@ import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-/**
- * Created by Ben on 6/9/20 @ 9:16 AM
- */
 class UuidUtilTest {
 
     /**

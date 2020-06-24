@@ -8,7 +8,7 @@ import java.util.UUID;
 import me.nullicorn.hypixel4j.util.UuidUtil;
 
 /**
- * Created by Ben on 6/10/20 @ 9:40 AM
+ * Json type adapter for UUID strings without hyphens
  */
 public class TrimmedUUIDTypeAdapter extends TypeAdapter<UUID> {
 

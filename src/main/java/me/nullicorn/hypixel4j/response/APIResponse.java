@@ -5,7 +5,7 @@ import lombok.Getter;
 import me.nullicorn.hypixel4j.data.HypixelObject;
 
 /**
- * Created by Ben on 6/8/20 @ 5:52 PM
+ * An abstract response from the Hypixel API
  */
 @Getter
 public abstract class APIResponse<T extends HypixelObject> {

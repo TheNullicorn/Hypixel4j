@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 
 /**
- * Created by Ben on 6/8/20 @ 9:38 PM
+ * All formatting codes used to color and stylize text in Minecraft
  */
 @Getter
 public enum FormatCode {

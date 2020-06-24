@@ -9,7 +9,7 @@ import me.nullicorn.hypixel4j.exception.ApiException;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
 
 /**
- * Created by Ben on 6/18/20 @ 1:11 PM
+ * Represents a member of a Hypixel guild
  */
 public class HypixelGuildMember {
 

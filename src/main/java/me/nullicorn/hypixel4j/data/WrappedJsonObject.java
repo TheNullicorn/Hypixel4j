@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
- * Created by Ben on 6/9/20 @ 6:27 AM
+ * Represents a JsonObject with fields accessible via dot-notation
  */
 public interface WrappedJsonObject {
 

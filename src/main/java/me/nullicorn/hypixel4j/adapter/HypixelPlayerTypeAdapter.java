@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
 
 /**
- * Created by Ben on 6/10/20 @ 1:43 PM
+ * Json serializer and deserializer for Hypixel player objects returned from the Hypixel API
  */
 public class HypixelPlayerTypeAdapter implements JsonSerializer<HypixelPlayer>,
     JsonDeserializer<HypixelPlayer> {
