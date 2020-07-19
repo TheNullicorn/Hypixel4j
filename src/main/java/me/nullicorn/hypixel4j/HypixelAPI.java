@@ -208,9 +208,15 @@ public class HypixelAPI {
             request.setHeaders(requestHeaders);
 
             HttpResponse response = httpClient.execute(request);
+
+            // Ensure content-type is JSON (CloudFlare and Nginx return text/html error pages)
+            String contentTypeHeader = response.getFirstHeader("content-type").toString();
+            if (!contentTypeHeader.contains("application/json")) {
+                throw new ApiException("API returned a non-JSON response");
+            }
+
             APIResponse<T> apiResponse = gson
                 .fromJson(EntityUtils.toString(response.getEntity()), type);
-
             if (apiResponse.isThrottled()) {
                 // Key throttled
                 throw new KeyThrottleException();
