@@ -237,7 +237,7 @@ public class HypixelAPI {
                 .fromJson(EntityUtils.toString(response.getEntity()), type);
             if (apiResponse.isThrottled()) {
                 // Key throttled
-                throw new KeyThrottleException();
+                throw new KeyThrottleException(apiResponse.isGloballyThrottled());
 
             } else if (!apiResponse.isSuccessful()) {
                 // Other failure

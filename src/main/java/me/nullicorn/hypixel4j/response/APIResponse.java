@@ -16,6 +16,9 @@ public abstract class APIResponse<T extends HypixelObject> {
     @SerializedName("throttle")
     private boolean throttled;
 
+    @SerializedName("global")
+    private boolean globallyThrottled;
+
     @SerializedName("cause")
     private String error;
 
