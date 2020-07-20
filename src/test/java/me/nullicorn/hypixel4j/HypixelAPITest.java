@@ -8,6 +8,7 @@ import me.nullicorn.hypixel4j.response.guild.HypixelGuild;
 import me.nullicorn.hypixel4j.response.player.HypixelFriendList;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayerSession;
+import me.nullicorn.hypixel4j.response.player.RecentGamesResponse.HypixelGameSessionList;
 import net.jodah.concurrentunit.Waiter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -108,5 +109,20 @@ class HypixelAPITest {
     void test_fetchPlayerSessionStatus_Sync() throws ApiException {
         HypixelPlayerSession session = api.getPlayerSession(APITestConstants.SAMPLE_PLAYER_UUID);
         System.out.println(session);
+
+        Assertions.assertNotNull(session);
+    }
+
+    /*
+    Fetch Recent Games
+     */
+
+    @Test
+    void test_fetchPlayerRecentGames_Sync() throws ApiException {
+        HypixelGameSessionList recentGames
+            = api.getPlayerRecentGames(APITestConstants.SAMPLE_PLAYER_UUID);
+        System.out.println(recentGames);
+
+        Assertions.assertNotNull(recentGames);
     }
 }

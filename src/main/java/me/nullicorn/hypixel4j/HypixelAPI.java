@@ -23,9 +23,12 @@ import me.nullicorn.hypixel4j.response.guild.GuildResponse;
 import me.nullicorn.hypixel4j.response.guild.HypixelGuild;
 import me.nullicorn.hypixel4j.response.player.FriendshipsResponse;
 import me.nullicorn.hypixel4j.response.player.HypixelFriendList;
+import me.nullicorn.hypixel4j.response.player.HypixelGameSession;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayerSession;
 import me.nullicorn.hypixel4j.response.player.PlayerResponse;
+import me.nullicorn.hypixel4j.response.player.RecentGamesResponse;
+import me.nullicorn.hypixel4j.response.player.RecentGamesResponse.HypixelGameSessionList;
 import me.nullicorn.hypixel4j.response.player.SessionStatusResponse;
 import me.nullicorn.hypixel4j.util.UuidUtil;
 import org.apache.http.Header;
@@ -174,6 +177,21 @@ public class HypixelAPI {
 
     public HypixelPlayerSession getPlayerSession(UUID playerUuid) throws ApiException {
         return fetch(SessionStatusResponse.class, "status",
+            Collections.singletonMap("uuid", UuidUtil.undash(playerUuid)));
+    }
+
+    /**
+     * Get a list of games recently played by a player. Recent games are stored for 3 days and no
+     * more than 100 games should be returned. A player may opt to hide data in this endpoint; see
+     * {@link HypixelGameSession} for more info.
+     *
+     * @param playerUuid Minecraft UUID of the player
+     * @return A list of games (or rather game-sessions) played by that player in the last 3 days
+     * @throws ApiException If the request could not be made, or if the Hypixel API returned an
+     *                      error
+     */
+    public HypixelGameSessionList getPlayerRecentGames(UUID playerUuid) throws ApiException {
+        return fetch(RecentGamesResponse.class, "recentGames",
             Collections.singletonMap("uuid", UuidUtil.undash(playerUuid)));
     }
 
