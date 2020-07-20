@@ -2,11 +2,9 @@ package me.nullicorn.hypixel4j.response.player;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
-import me.nullicorn.hypixel4j.data.HypixelObject;
-import me.nullicorn.hypixel4j.util.GameType;
 
 /**
- * Represents the status of a Hypixel player's session.
+ * Represents the status of a Hypixel player's session at a fixed point in time
  * <p>
  * There are some important things to note:
  * <ul>
@@ -15,7 +13,7 @@ import me.nullicorn.hypixel4j.util.GameType;
  * </ul>
  */
 @Getter
-public class HypixelPlayerSession implements HypixelObject {
+public class HypixelPlayerSession extends HypixelSession {
 
     /**
      * Whether or not the requested player is online, or false if the player has chosen to hide
@@ -25,33 +23,19 @@ public class HypixelPlayerSession implements HypixelObject {
     protected boolean isPlayerOnline;
 
     /**
-     * The player's current location. This value may be any of the {@link GameType GameTypes'} type
-     * names / enum names, but can also include non-game values such as "TOURNAMENT", "MAIN", and
-     * others. This may be null if it is unknown (see documentation for {@link
-     * HypixelPlayerSession})
+     * The player's current location. This value may be any of the {@link
+     * me.nullicorn.hypixel4j.util.GameType GameTypes'} type names (enum names), but can also
+     * include non-game values such as "TOURNAMENT", "MAIN", and others. This may be null if it is
+     * unknown (see documentation for {@link HypixelSession})
      */
     @SerializedName("gameType")
     protected String location;
-
-    /**
-     * Sub-type (or "mode") of the game / location that the player is currently in (not to be
-     * confused with Minecraft gamemodes), or null if it is unknown (see documentation for {@link
-     * HypixelPlayerSession})
-     */
-    protected String mode;
-
-    /**
-     * Name of the Minecraft map that the player's current game is being played on, or null if it is
-     * unknown (see documentation for {@link HypixelPlayerSession})
-     */
-    @SerializedName("map")
-    protected String mapName;
 
     @Override
     public String toString() {
         return "HypixelPlayerSession{" +
             "isPlayerOnline=" + isPlayerOnline +
-            ", location=" + location +
+            ", location='" + location + '\'' +
             ", mode='" + mode + '\'' +
             ", mapName='" + mapName + '\'' +
             '}';
