@@ -4,6 +4,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import me.nullicorn.hypixel4j.exception.ApiException;
+import me.nullicorn.hypixel4j.response.booster.BoosterResponse;
 import me.nullicorn.hypixel4j.response.guild.HypixelGuild;
 import me.nullicorn.hypixel4j.response.player.HypixelFriendList;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
@@ -124,5 +125,18 @@ class HypixelAPITest {
         System.out.println(recentGames);
 
         Assertions.assertNotNull(recentGames);
+    }
+
+    /*
+    Fetch Booster Data
+     */
+
+    @Test
+    void test_fetchBoosterData_Sync() throws ApiException {
+        BoosterResponse boosterData = api.getBoosterData();
+        System.out.println(boosterData);
+
+        Assertions.assertNotNull(boosterData);
+        Assertions.assertFalse(boosterData.getAllBoosters().isEmpty());
     }
 }

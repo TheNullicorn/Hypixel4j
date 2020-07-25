@@ -11,6 +11,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import me.nullicorn.hypixel4j.adapter.GameTypeTypeAdapter;
 import me.nullicorn.hypixel4j.adapter.HypixelFriendListTypeAdapter;
 import me.nullicorn.hypixel4j.adapter.HypixelPlayerTypeAdapter;
 import me.nullicorn.hypixel4j.adapter.TrimmedUUIDTypeAdapter;
@@ -19,6 +20,7 @@ import me.nullicorn.hypixel4j.data.HypixelObject;
 import me.nullicorn.hypixel4j.exception.ApiException;
 import me.nullicorn.hypixel4j.exception.KeyThrottleException;
 import me.nullicorn.hypixel4j.response.APIResponse;
+import me.nullicorn.hypixel4j.response.booster.BoosterResponse;
 import me.nullicorn.hypixel4j.response.guild.GuildResponse;
 import me.nullicorn.hypixel4j.response.guild.HypixelGuild;
 import me.nullicorn.hypixel4j.response.player.FriendshipsResponse;
@@ -30,6 +32,7 @@ import me.nullicorn.hypixel4j.response.player.PlayerResponse;
 import me.nullicorn.hypixel4j.response.player.RecentGamesResponse;
 import me.nullicorn.hypixel4j.response.player.RecentGamesResponse.HypixelGameSessionList;
 import me.nullicorn.hypixel4j.response.player.SessionStatusResponse;
+import me.nullicorn.hypixel4j.util.GameType;
 import me.nullicorn.hypixel4j.util.UuidUtil;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -48,6 +51,7 @@ public class HypixelAPI {
     private static final Gson gson = new GsonBuilder()
         .registerTypeAdapter(Date.class, new UnixTimestampTypeAdapter())
         .registerTypeAdapter(UUID.class, new TrimmedUUIDTypeAdapter())
+        .registerTypeAdapter(GameType.class, new GameTypeTypeAdapter())
         .registerTypeAdapter(HypixelPlayer.class, new HypixelPlayerTypeAdapter())
         .registerTypeAdapter(HypixelFriendList.class, new HypixelFriendListTypeAdapter())
         .setPrettyPrinting()
@@ -193,6 +197,10 @@ public class HypixelAPI {
     public HypixelGameSessionList getPlayerRecentGames(UUID playerUuid) throws ApiException {
         return fetch(RecentGamesResponse.class, "recentGames",
             Collections.singletonMap("uuid", UuidUtil.undash(playerUuid)));
+    }
+
+    public BoosterResponse getBoosterData() throws ApiException {
+        return fetch(BoosterResponse.class, "boosters", Collections.emptyMap());
     }
 
     protected <T extends HypixelObject> CompletableFuture<T> fetchAsync(Class<? extends APIResponse<T>> type, String endpoint, Map<String, Object> params) {

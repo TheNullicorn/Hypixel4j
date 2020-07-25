@@ -16,7 +16,7 @@ public enum GameType {
 
     UNKNOWN(-1, "Unknown", "Unknown Game"),
 
-    // Old Games
+    // Old Games (made before mid-2015)
     QUAKECRAFT(2, "Quake", "Quakecraft"),
     WALLS(3, "Walls", "The Walls"),
     PAINTBALL(4, "Paintball", "Paintball"),
@@ -33,11 +33,11 @@ public enum GameType {
     GINGERBREAD(25, "GingerBread", "Turbo Kart Racers"),
     HOUSING(26, "Housing", "Housing"),
 
-    // Modern Games
+    // Modern Games (made after mid-2015)
     SKYWARS(51, "SkyWars", "SkyWars"),
-    TRUE_COMBAT(52, "TrueCombat", "Crazy Walls"),
+    TRUE_COMBAT(52, "TrueCombat", "Crazy Walls"), // Removed
     SPEED_UHC(54, "SpeedUHC", "Speed UHC"),
-    SKYCLASH(55, "SkyClash", "SkyClash"),
+    SKYCLASH(55, "SkyClash", "SkyClash"), // Removed
     LEGACY(56, "Legacy", "Classic Games"),
     PROTOTYPE(57, "Prototype", "Prototype Games"),
     BEDWARS(58, "Bedwars", "Bed Wars"),
