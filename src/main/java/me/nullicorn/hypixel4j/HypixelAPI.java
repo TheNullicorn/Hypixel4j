@@ -69,7 +69,7 @@ public class HypixelAPI {
      * @param apiKey API key used to access the Hypixel API
      */
     public HypixelAPI(UUID apiKey) {
-        this(apiKey, "Hypixel4j/0.0.1 (Generic Application)");
+        this(apiKey, "Hypixel4j/0.0.2 (Generic Application)");
     }
 
     /**
