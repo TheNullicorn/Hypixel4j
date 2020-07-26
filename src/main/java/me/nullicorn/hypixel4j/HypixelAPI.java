@@ -21,6 +21,7 @@ import me.nullicorn.hypixel4j.exception.ApiException;
 import me.nullicorn.hypixel4j.exception.KeyThrottleException;
 import me.nullicorn.hypixel4j.response.APIResponse;
 import me.nullicorn.hypixel4j.response.booster.BoosterResponse;
+import me.nullicorn.hypixel4j.response.gamecounts.GameCountsResponse;
 import me.nullicorn.hypixel4j.response.guild.GuildResponse;
 import me.nullicorn.hypixel4j.response.guild.HypixelGuild;
 import me.nullicorn.hypixel4j.response.player.FriendshipsResponse;
@@ -201,6 +202,10 @@ public class HypixelAPI {
 
     public BoosterResponse getBoosterData() throws ApiException {
         return fetch(BoosterResponse.class, "boosters", Collections.emptyMap());
+    }
+
+    public GameCountsResponse getGameCounts() throws ApiException {
+        return fetch(GameCountsResponse.class, "gameCounts", Collections.emptyMap());
     }
 
     protected <T extends HypixelObject> CompletableFuture<T> fetchAsync(Class<? extends APIResponse<T>> type, String endpoint, Map<String, Object> params) {

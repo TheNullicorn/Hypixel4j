@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import me.nullicorn.hypixel4j.exception.ApiException;
 import me.nullicorn.hypixel4j.response.booster.BoosterResponse;
+import me.nullicorn.hypixel4j.response.gamecounts.GameCountsResponse;
+import me.nullicorn.hypixel4j.response.gamecounts.HypixelGameCounts;
 import me.nullicorn.hypixel4j.response.guild.HypixelGuild;
 import me.nullicorn.hypixel4j.response.player.HypixelFriendList;
 import me.nullicorn.hypixel4j.response.player.HypixelPlayer;
@@ -138,5 +140,28 @@ class HypixelAPITest {
 
         Assertions.assertNotNull(boosterData);
         Assertions.assertFalse(boosterData.getAllBoosters().isEmpty());
+    }
+
+    /*
+    Fetch Player Counts
+     */
+
+    @Test
+    void test_fetchGameCounts_Sync() throws ApiException {
+        GameCountsResponse gameCounts = api.getGameCounts();
+        System.out.println(gameCounts);
+
+        Assertions.assertNotNull(gameCounts);
+        Assertions.assertFalse(gameCounts.getGames().isEmpty());
+
+        for (String gameName : gameCounts.getGames()) {
+            HypixelGameCounts game = gameCounts.getGameCountsFor(gameName);
+
+            System.out.println(gameName + ": " + game.getTotalPlayers() + " playing");
+            game.getModeMap().forEach((modeName, playersInMode) -> {
+                System.out.println("    - " + modeName + ": " + playersInMode + " playing");
+            });
+            System.out.println();
+        }
     }
 }
