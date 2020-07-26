@@ -7,6 +7,7 @@ import lombok.Getter;
 import me.nullicorn.hypixel4j.data.HypixelObject;
 import me.nullicorn.hypixel4j.util.FormatCode;
 import me.nullicorn.hypixel4j.util.GameType;
+import me.nullicorn.hypixel4j.util.ObjectIdUtil;
 
 /**
  * Represents a Hypixel guild
@@ -53,18 +54,20 @@ public class HypixelGuild implements HypixelObject {
     @SerializedName("exp")
     protected long experience;
 
-    @Getter
-    @SerializedName("created")
-    protected Date createdAt;
+    /*
+    Privacy settings
+     */
 
-    // Privacy settings
     @Getter
     protected boolean joinable;
 
     @Getter
     protected boolean publiclyListed;
 
-    // Discontinued
+    /*
+    Deprecated
+     */
+
     @Getter
     protected long coins;
 
@@ -93,6 +96,16 @@ public class HypixelGuild implements HypixelObject {
         return ranks;
     }
 
+    /**
+     * @return The date when the guild was first created, or null if {@link #exists()} returns false
+     */
+    public Date getCreationDate() {
+        if (exists()) {
+            return ObjectIdUtil.getTimestamp(id);
+        }
+        return new Date(0L);
+    }
+
     @Override
     public String toString() {
         return "HypixelGuild{" +
@@ -105,7 +118,7 @@ public class HypixelGuild implements HypixelObject {
             ", members=" + members +
             ", ranks=" + ranks +
             ", experience=" + experience +
-            ", createdAt=" + createdAt +
+            ", createdAt=" + getCreationDate() +
             ", joinable=" + joinable +
             ", publiclyListed=" + publiclyListed +
             ", coins=" + coins +

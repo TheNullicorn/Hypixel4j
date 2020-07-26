@@ -43,6 +43,8 @@ class HypixelAPITest {
     @Test
     void test_fetchPlayer_Sync() throws ApiException {
         HypixelPlayer player = api.getPlayer(APITestConstants.HYPIXEL_UUID);
+        System.out.println(player);
+
         Assertions.assertTrue(player.exists());
         Assertions.assertEquals(APITestConstants.HYPIXEL_UUID, player.getUuid());
     }
@@ -58,6 +60,8 @@ class HypixelAPITest {
             }
 
             try {
+                System.out.println(player);
+
                 Assertions.assertTrue(player.exists());
                 Assertions.assertEquals(APITestConstants.HYPIXEL_UUID, player.getUuid());
                 waiter.resume();
@@ -72,6 +76,8 @@ class HypixelAPITest {
     @Test
     void test_fetchPlayer_Sync_NonExistent() throws ApiException {
         HypixelPlayer player = api.getPlayer(APITestConstants.NULL_PLAYER_UUID);
+        System.out.println(player);
+
         Assertions.assertFalse(player.exists());
     }
 
@@ -82,6 +88,8 @@ class HypixelAPITest {
     @Test
     void test_fetchGuildSync_ById() throws ApiException {
         HypixelGuild guild = api.getGuildById(APITestConstants.SAMPLE_GUILD_ID);
+        System.out.println(guild);
+
         Assertions.assertTrue(guild.exists());
         Assertions.assertEquals(APITestConstants.SAMPLE_GUILD_ID, guild.getId());
     }
@@ -100,7 +108,8 @@ class HypixelAPITest {
             + friendList.getSize() + " friends:");
         friendList.getFriendships().forEach(friendship -> {
             System.out.print(friendship.wasOutgoing() ? "Sent:     " : "Received: ");
-            System.out.println(friendship.getOtherPlayerUuid());
+            System.out.print(friendship.getOtherPlayerUuid());
+            System.out.println(" @ " + friendship.getStartDate());
         });
     }
 

@@ -9,6 +9,7 @@ import java.util.UUID;
 import me.nullicorn.hypixel4j.data.ComplexHypixelObject;
 import me.nullicorn.hypixel4j.util.FormatCode;
 import me.nullicorn.hypixel4j.util.GameType;
+import me.nullicorn.hypixel4j.util.ObjectIdUtil;
 import me.nullicorn.hypixel4j.util.UuidUtil;
 
 /**
@@ -107,8 +108,12 @@ public class HypixelPlayer extends ComplexHypixelObject {
      * @return The player's first login date, or null if it is unknown
      */
     public Date getFirstLogin() {
-        if (hasProperty("firstLogin")) {
+        if (hasProperty("_id")) {
+            return ObjectIdUtil.getTimestamp(getStringProperty("_id", ""));
+
+        } else if (hasProperty("firstLogin")) {
             return new Date(getLongProperty("firstLogin", 0));
+
         }
         return null;
     }

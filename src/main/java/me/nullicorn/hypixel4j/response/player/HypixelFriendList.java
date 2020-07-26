@@ -7,6 +7,7 @@ import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 import me.nullicorn.hypixel4j.data.HypixelObject;
+import me.nullicorn.hypixel4j.util.ObjectIdUtil;
 
 /**
  * Represents a Hypixel player's friend list
@@ -78,9 +79,18 @@ public class HypixelFriendList implements HypixelObject {
          * The date at which this friendship was started; if these two players have been friends
          * before, this is the most recent date at which a friend request was accepted between them
          */
-        @Getter
         @SerializedName("started")
         protected Date startDate;
+
+        /**
+         * @return The date when this friendship was started
+         */
+        public Date getStartDate() {
+            if (id != null) {
+                return ObjectIdUtil.getTimestamp(id);
+            }
+            return startDate;
+        }
 
         /**
          * @return Minecraft UUID of the other player (not the owner of this friend list)
@@ -105,7 +115,7 @@ public class HypixelFriendList implements HypixelObject {
                 "id='" + id + '\'' +
                 ", senderUuid=" + senderUuid +
                 ", receiverUuid=" + receiverUuid +
-                ", startDate=" + startDate +
+                ", startDate=" + getStartDate() +
                 '}';
         }
     }
