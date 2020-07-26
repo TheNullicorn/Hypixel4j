@@ -32,7 +32,7 @@ class HypixelAPITest {
             System.err.println("\"apiKey\" property must be set!");
 
         } else {
-            api = new HypixelAPI(UUID.fromString(keyValue), "Hypixel4j/0.0.2 (test env)");
+            api = new HypixelAPI(UUID.fromString(keyValue), "Hypixel4j/0.0.3 (test env)");
         }
     }
 

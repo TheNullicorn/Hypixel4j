@@ -24,6 +24,8 @@ import me.nullicorn.hypixel4j.response.booster.BoosterResponse;
 import me.nullicorn.hypixel4j.response.gamecounts.GameCountsResponse;
 import me.nullicorn.hypixel4j.response.guild.GuildResponse;
 import me.nullicorn.hypixel4j.response.guild.HypixelGuild;
+import me.nullicorn.hypixel4j.response.key.HypixelAPIKeyStats;
+import me.nullicorn.hypixel4j.response.key.KeyStatsResponse;
 import me.nullicorn.hypixel4j.response.player.FriendshipsResponse;
 import me.nullicorn.hypixel4j.response.player.HypixelFriendList;
 import me.nullicorn.hypixel4j.response.player.HypixelGameSession;
@@ -69,7 +71,7 @@ public class HypixelAPI {
      * @param apiKey API key used to access the Hypixel API
      */
     public HypixelAPI(UUID apiKey) {
-        this(apiKey, "Hypixel4j/0.0.2 (Generic Application)");
+        this(apiKey, "Hypixel4j/0.0.3 (Generic Application)");
     }
 
     /**
@@ -206,6 +208,10 @@ public class HypixelAPI {
 
     public GameCountsResponse getGameCounts() throws ApiException {
         return fetch(GameCountsResponse.class, "gameCounts", Collections.emptyMap());
+    }
+
+    public HypixelAPIKeyStats getApiKeyStats() throws ApiException {
+        return fetch(KeyStatsResponse.class, "key", Collections.emptyMap());
     }
 
     protected <T extends HypixelObject> CompletableFuture<T> fetchAsync(Class<? extends APIResponse<T>> type, String endpoint, Map<String, Object> params) {
